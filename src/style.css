@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
+
+/* 全ての要素でpaddingとborderを幅の計算に含める（レイアウト崩れ防止） */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Mochiy Pop P One', sans-serif;
+  /* 背景色はAbsoluteFillで管理するため、bodyは透明またはデフォルトでOK */
+}
