@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" style="background-color: white;">
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&amp;display=swap");
+text { font-family: "Crimson Text", "Times New Roman", serif; font-weight: bold; }
+.math-it { font-family: "Times New Roman", Times, serif; font-style: italic; font-weight: normal; }
+</style>
+<g id="main_scene" opacity="0"  style="transform-box: fill-box; transform-origin: center;">
+<polygon points="207.38940087165503,47.014746550446006 90.34516122031704,368.5911520697324 324.433640522993,368.5911520697324" stroke="#000000" stroke-width="2.5" fill="none" fill-opacity="1.0" stroke-linejoin="round" />
+<line x1="324.433640522993" y1="368.5911520697324" x2="441.477880174331" y2="368.5911520697324" stroke="#000000" stroke-width="2.5"  stroke-linecap="round" />
+<text x="207.38940087165503" y="23.605898620178408" font-size="20" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" >A</text>
+<text x="66.93631329004944" y="376.3941013798216" font-size="20" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" >B</text>
+<text x="324.433640522993" y="392.0" font-size="20" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" >C</text>
+<line x1="159.86584187657195" y1="211.80609807218866" x2="137.86872021540006" y2="203.79980054798978" stroke="#000000" stroke-width="1"  stroke-linecap="round" />
+<line x1="276.91008152791" y1="203.79980054798978" x2="254.91295986673802" y2="211.80609807218866" stroke="#000000" stroke-width="1"  stroke-linecap="round" />
+<text x="90.34516122031704" y="8.0" font-size="36.0" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" >(1)</text>
+<polygon points="698.9752074072746,47.014746550446006 581.9309677559365,368.5911520697324 816.0194470586126,368.5911520697324" stroke="#000000" stroke-width="2.5" fill="none" fill-opacity="1.0" stroke-linejoin="round" />
+<line x1="816.0194470586126" y1="368.5911520697324" x2="933.0636867099506" y2="368.5911520697324" stroke="#000000" stroke-width="2.5"  stroke-linecap="round" />
+<text x="698.9752074072746" y="23.605898620178408" font-size="20" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" >A'</text>
+<text x="558.522119825669" y="376.3941013798216" font-size="20" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" >B'</text>
+<text x="816.0194470586126" y="392.0" font-size="20" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" >C'</text>
+<line x1="651.4516484121916" y1="211.80609807218866" x2="629.4545267510197" y2="203.79980054798978" stroke="#000000" stroke-width="1"  stroke-linecap="round" />
+<line x1="768.4958880635297" y1="203.79980054798978" x2="746.4987664023577" y2="211.80609807218866" stroke="#000000" stroke-width="1"  stroke-linecap="round" />
+<text x="581.9309677559365" y="8.0" font-size="36.0" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" >(2)</text>
+<text x="207.38940087165503" y="117.2412903412488" font-size="30.0" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" class="math-it">x</text>
+<path d="M 191.3768058232572 91.00898987278988 A 46.817695860535196 46.817695860535196 0 0 0 223.40199592005285 91.00898987278988" fill="none" stroke="black" stroke-width="2" opacity="1" style=""></path>
+<text x="364.71393124777234" y="311.06493516014586" font-size="24" fill="black" text-anchor="middle" dominant-baseline="middle" opacity="1" >110°</text>
+<path d="M 371.25133638352816 368.5911520697324 A 46.817695860535196 46.817695860535196 0 0 0 308.4210454745952 324.5969087473885" fill="none" stroke="black" stroke-width="2" opacity="1" style=""></path>
+<circle cx="207.38940087165503" cy="117.2412903412488" r="40.0" fill="none" stroke="red" stroke-width="3" opacity="0" style=""></circle>
+</g>
+</svg>

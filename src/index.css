@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+/* Make KaTeX math formulas bolder to match the surrounding text */
+.katex {
+  font-weight: bold !important;
+  /* Use text-shadow to simulate a stroke/boldness because KaTeX fonts are very thin */
+  text-shadow: 0 0 1px currentColor, 0 0 1px currentColor;
+}
+
+.katex .katex-mathml {
+  font-weight: bold !important;
+}
+
+.katex .katex-html {
+  font-weight: bold !important;
+}

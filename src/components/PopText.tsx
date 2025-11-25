@@ -14,12 +14,12 @@ type PopTextProps = {
   shadow?: boolean; // 新機能: ドロップシャドウの有無
 };
 
-export const PopText: React.FC<PopTextProps> = ({ 
-  children, 
-  color, 
-  strokeColor = '#000', 
-  fontSize, 
-  rotate = 0, 
+export const PopText: React.FC<PopTextProps> = ({
+  children,
+  color,
+  strokeColor = '#000',
+  fontSize,
+  rotate = 0,
   delay = 0,
   noAnimation = false,
   simpleAnimation = false,
@@ -28,10 +28,10 @@ export const PopText: React.FC<PopTextProps> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  
+
   let scale = 1;
   let opacity = 1;
-  
+
   const actualFrame = Math.max(0, frame - delay);
 
   if (noAnimation) {
@@ -41,15 +41,15 @@ export const PopText: React.FC<PopTextProps> = ({
     opacity = Math.min(1, actualFrame / 10);
     scale = 1;
   } else {
-    scale = spring({ 
-      frame: actualFrame, 
-      fps, 
-      config: { damping: 12, stiffness: 200 } 
+    scale = spring({
+      frame: actualFrame,
+      fps,
+      config: { damping: 12, stiffness: 200 }
     });
   }
 
   const commonStyle: React.CSSProperties = {
-    fontFamily: '"Mochiy Pop P One", sans-serif',
+    fontFamily: '"Noto Sans JP", sans-serif',
     fontSize: fontSize,
     lineHeight: 1.2,
     whiteSpace: 'pre-wrap',
@@ -59,10 +59,10 @@ export const PopText: React.FC<PopTextProps> = ({
   };
 
   return (
-    <div style={{ 
-      position: 'relative', 
-      width: width, 
-      display: 'flex', 
+    <div style={{
+      position: 'relative',
+      width: width,
+      display: 'flex',
       justifyContent: 'center',
       transform: `scale(${scale}) rotate(${rotate}deg)`,
       opacity: opacity,

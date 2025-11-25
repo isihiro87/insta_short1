@@ -33,20 +33,20 @@ export const MathShortsVideo: React.FC<{ scenes?: Scene[]; showSubtitles?: boole
         {scenes.map((scene, index) => {
           // 前のシーンの情報を取得
           const prevScene = index > 0 ? scenes[index - 1] : null;
-          
+
           // characterCommentContinuousの場合、前のシーンのcharacterCommentを使用
           let displayComment = scene.characterComment;
           let displayCommentColor = scene.characterCommentColor;
           let displayCommentImportant = scene.characterCommentImportant;
           let isCommentContinuous = false;
-          
+
           if (scene.characterCommentContinuous && prevScene) {
             displayComment = prevScene.characterComment;
             displayCommentColor = prevScene.characterCommentColor;
             displayCommentImportant = prevScene.characterCommentImportant;
             isCommentContinuous = true;
           }
-          
+
           // overlayTextContinuousの場合、前のシーンのoverlayTextを使用
           // 連続する場合は最初にoverlayTextが設定されているシーンまで遡る
           let displayOverlayText = scene.overlayText;
@@ -68,7 +68,7 @@ export const MathShortsVideo: React.FC<{ scenes?: Scene[]; showSubtitles?: boole
           // 役割に応じた間を計算
           let pauseBefore = 0; // シーンの前の間
           let pauseAfter = 0; // シーンの後の間
-          
+
           if (scene.role === 'answer') {
             // 答えの後、切り替え前に間を取る
             pauseAfter = 15; // 15フレーム（0.5秒）の間
@@ -91,13 +91,13 @@ export const MathShortsVideo: React.FC<{ scenes?: Scene[]; showSubtitles?: boole
             const prevDisplayCommentColor = prevScene.characterCommentColor;
             const prevDisplayCommentImportant = prevScene.characterCommentImportant;
             const prevDisplayOverlayText = prevScene.overlayText;
-            
+
             // 間のフレーム用のシーン（音声なし）
             const pauseScene: Scene = {
               ...prevScene,
               audioSrc: '', // 音声を流さない
             };
-            
+
             return (
               <React.Fragment key={scene.id}>
                 <Series.Sequence durationInFrames={pauseBefore}>
@@ -113,7 +113,7 @@ export const MathShortsVideo: React.FC<{ scenes?: Scene[]; showSubtitles?: boole
                     isOverlayContinuous={true}
                   />
                 </Series.Sequence>
-                <Series.Sequence durationInFrames={scene.durationInFrames}>
+                <Series.Sequence durationInFrames={scene.durationInFrames + pauseAfter}>
                   <SceneCard
                     scene={scene}
                     isFirstScene={index === 0}
@@ -126,29 +126,13 @@ export const MathShortsVideo: React.FC<{ scenes?: Scene[]; showSubtitles?: boole
                     isOverlayContinuous={isOverlayContinuous}
                   />
                 </Series.Sequence>
-                {pauseAfter > 0 && (
-                  <Series.Sequence durationInFrames={pauseAfter}>
-                    {/* 間のフレーム用のシーン（音声なし） */}
-                    <SceneCard
-                      scene={{ ...scene, audioSrc: '' }}
-                      isFirstScene={false}
-                      showSubtitles={showSubtitles}
-                      displayComment={displayComment}
-                      displayCommentColor={displayCommentColor}
-                      displayCommentImportant={displayCommentImportant}
-                      displayOverlayText={displayOverlayText}
-                      isCommentContinuous={true}
-                      isOverlayContinuous={true}
-                    />
-                  </Series.Sequence>
-                )}
               </React.Fragment>
             );
           }
 
           return (
             <React.Fragment key={scene.id}>
-              <Series.Sequence durationInFrames={scene.durationInFrames}>
+              <Series.Sequence durationInFrames={scene.durationInFrames + pauseAfter}>
                 <SceneCard
                   scene={scene}
                   isFirstScene={index === 0}
@@ -161,22 +145,6 @@ export const MathShortsVideo: React.FC<{ scenes?: Scene[]; showSubtitles?: boole
                   isOverlayContinuous={isOverlayContinuous}
                 />
               </Series.Sequence>
-              {pauseAfter > 0 && (
-                <Series.Sequence durationInFrames={pauseAfter}>
-                  {/* 間のフレーム用のシーン（音声なし） */}
-                  <SceneCard
-                    scene={{ ...scene, audioSrc: '' }}
-                    isFirstScene={false}
-                    showSubtitles={showSubtitles}
-                    displayComment={displayComment}
-                    displayCommentColor={displayCommentColor}
-                    displayCommentImportant={displayCommentImportant}
-                    displayOverlayText={displayOverlayText}
-                    isCommentContinuous={true}
-                    isOverlayContinuous={true}
-                  />
-                </Series.Sequence>
-              )}
             </React.Fragment>
           );
         })}

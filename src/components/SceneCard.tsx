@@ -1,5 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, Audio } from 'remotion';
+import Latex from 'react-latex-next';
 import { Scene } from '../data';
 import { PopText } from './PopText';
 import { Whiteboard } from './Whiteboard';
@@ -145,7 +146,7 @@ export const SceneCard: React.FC<{
       {showSubtitles && finalComment && (
         <div style={{
           position: 'absolute',
-          bottom: '12%',
+          bottom: finalCommentImportant ? '12%' : '12%',
           left: '2%',
           width: '70%',
           zIndex: 60,
@@ -168,14 +169,14 @@ export const SceneCard: React.FC<{
                 <PopText
                   color={finalCommentColor || (finalCommentImportant && isLastLine ? "#FFEB3B" : "#1A237E")}
                   strokeColor={finalCommentImportant && isLastLine ? "#E53935" : "#FFFFFF"}
-                  fontSize={unifiedFontSize}
+                  fontSize={finalCommentImportant && isLastLine ? unifiedFontSize * 2 : unifiedFontSize}
                   shadow={finalCommentImportant && isLastLine}
                   width="100%"
                   noAnimation={isCommentContinuous || !(finalCommentImportant && isLastLine)}
                   delay={finalCommentImportant && isLastLine && !isCommentContinuous ? 10 : 0}
                   rotate={0}
                 >
-                  {line}
+                  <Latex>{line.replace(/\$([^$]+)\$/g, '$\\boldsymbol{$1}$')}</Latex>
                 </PopText>
               </div>
             );

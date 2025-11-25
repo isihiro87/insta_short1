@@ -1,5 +1,15 @@
 import React from 'react';
 import { staticFile, Img } from 'remotion';
+import { Problem03Step1 } from './components/animations/Problem03Step1';
+import { Problem03Step2 } from './components/animations/Problem03Step2';
+import { Problem03Step3 } from './components/animations/Problem03Step3';
+import { Problem03Step4 } from './components/animations/Problem03Step4';
+import { Problem03Step5 } from './components/animations/Problem03Step5';
+import { Problem04Step1 } from './components/animations/Problem04Step1';
+import { Problem04Step2 } from './components/animations/Problem04Step2';
+import { Problem04Question } from './components/animations/Problem04Question';
+
+
 
 export type Scene = {
   id: string;
@@ -21,7 +31,6 @@ export type Scene = {
 export const GLOBAL_TITLE = '二等辺三角形の性質';
 
 const ImageBoard = ({ src }: { src: string }) => {
-  console.log('ImageBoard rendering with src:', src);
   return (
     <div style={{
       width: '100%',
@@ -66,32 +75,34 @@ export const mathLessonData: Scene[] = [
   // 02: 第いち問！
   {
     id: 'scene2',
-    durationInFrames: 35, // 1.16s * 30fps = 34.8
+    durationInFrames: 50, // 1.16s * 30fps = 34.8
     audioSrc: staticFile('audio/iso_triangle/02-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_original.png')} />,
-    overlayText: '第1問！',
-    characterComment: '',
+    boardContent: () => <Problem03Step1 showHighlight={false} />,
+    overlayText: '',
+    characterComment: '第1問！',
+    characterCommentImportant: true,
     role: 'subtitle',
     roleGroup: '3-1',
   },
+
   // 03: xの角度は？
   {
     id: 'scene3',
     durationInFrames: 49, // 1.624s * 30fps = 48.72
     audioSrc: staticFile('audio/iso_triangle/03-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_original.png')} />,
-    characterComment: 'xの角度は？',
+    boardContent: () => <Problem03Step1 showHighlight={true} animate={true} />,
+    characterComment: '$x$の角度は？',
     role: 'question',
     roleGroup: '3-1',
   },
-  // 04: まず、一直線の角度は180度だよね。
+  // 04: 一直線の角 = 180°
   {
     id: 'scene4',
     durationInFrames: 111, // 3.709s * 30fps = 111.27
     audioSrc: staticFile('audio/iso_triangle/04-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_original.png')} />,
+    boardContent: () => <Problem03Step2 animate={true} />,
     overlayText: '',
-    characterComment: '一直線 ⇒180°',
+    characterComment: '一直線の角 = 180°',
     role: 'explanation',
   },
   // 05: だから、
@@ -99,7 +110,7 @@ export const mathLessonData: Scene[] = [
     id: 'scene5',
     durationInFrames: 27, // 0.893s * 30fps = 26.79
     audioSrc: staticFile('audio/iso_triangle/05-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_original.png')} />,
+    boardContent: () => <Problem03Step2 animate={false} />,
     overlayText: '',
     characterComment: '',
     role: 'explanation',
@@ -109,19 +120,20 @@ export const mathLessonData: Scene[] = [
     id: 'scene6',
     durationInFrames: 81, // 2.698s * 30fps = 80.94
     audioSrc: staticFile('audio/iso_triangle/06-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_step_1.png')} />,
+    boardContent: () => <Problem03Step3 animate={true} />,
     overlayText: '',
     characterComment: '180° - 110°\n= 70°',
     role: 'explanation',
   },
-  // 07: 反対側のここも70度だね。
+  // 07: 180から110を引いて、70度だね。
   {
     id: 'scene7',
-    durationInFrames: 63, // 2.093s * 30fps = 62.79
+    durationInFrames: 95, // 3.164s * 30fps = 94.92
     audioSrc: staticFile('audio/iso_triangle/07-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_step_2.png')} />,
+    boardContent: () => <Problem03Step3 animate={false} />,
     overlayText: '',
     characterComment: '',
+    characterCommentContinuous: true,
     role: 'explanation',
   },
   // 08: 二等辺三角形の底角は等しいから、
@@ -129,60 +141,62 @@ export const mathLessonData: Scene[] = [
     id: 'scene8',
     durationInFrames: 90, // 3.008s * 30fps = 90.24
     audioSrc: staticFile('audio/iso_triangle/08-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_step_2.png')} />,
+    boardContent: () => <Problem03Step4 showAngleB={false} />,
     overlayText: '',
     characterComment: '底角は等しい',
     role: 'explanation',
   },
-  // 09: こっち側は70度だね。
+  // 09: 内角の和は180度だから、
   {
     id: 'scene9',
-    durationInFrames: 84, // 2.813s * 30fps = 84.39
+    durationInFrames: 88, // 2.92s * 30fps = 87.6
     audioSrc: staticFile('audio/iso_triangle/09-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_step_3.png')} />,
+    boardContent: () => <Problem03Step4 showAngleB={true} animate={true} />,
     overlayText: '',
-    characterComment: 'ここも70°',
+    characterComment: '',
     role: 'explanation',
   },
   // 10: 三角形の内角の和は180度だから、
   {
     id: 'scene10',
-    durationInFrames: 101, // 3.378s * 30fps = 101.34
+    durationInFrames: 110, // 3.655s * 30fps = 109.65
     audioSrc: staticFile('audio/iso_triangle/10-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_step_3.png')} />,
-    overlayText: '',
-    characterComment: '内角の和 = 180°',
+    boardContent: () => <Problem03Step4 showAngleB={true} animate={false} />, // Static
+    overlayText: '内角の和 = 180°',
+    characterComment: '',
     role: 'explanation',
   },
-  // 11: 180度から70度を2つ引いて、
+  // 11: 180から70と70を引いて、
   {
     id: 'scene11',
-    durationInFrames: 90, // 3.002s * 30fps = 90.06
+    durationInFrames: 104, // 3.456s * 30fps = 103.68
     audioSrc: staticFile('audio/iso_triangle/11-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_step_3.png')} />,
-    overlayText: '',
-    characterComment: '180° - (70°+70°)',
+    boardContent: () => <Problem03Step5 />, // Animates circles
+    characterComment: '180° - (70° + 70°)',
     role: 'explanation',
   },
   // 12: 答えは 40度！
   {
     id: 'scene12',
-    durationInFrames: 48, // 1.584s * 30fps = 47.52
+    durationInFrames: 66, // 2.186s * 30fps = 65.58
     audioSrc: staticFile('audio/iso_triangle/12-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_step_3.png')} />,
+    boardContent: () => <Problem03Step5 animate={false} />, // Static end state
     overlayText: '',
-    characterComment: 'x = 40°',
+    characterComment: '$x$ = 40°',
     characterCommentImportant: true,
     role: 'answer',
   },
+
+
   // 13: 第に問！
   {
     id: 'scene13',
-    durationInFrames: 32, // 1.058s * 30fps = 31.74
+    durationInFrames: 50, // 1.16s * 30fps = 34.8
     audioSrc: staticFile('audio/iso_triangle/13-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_original.png')} />,
-    overlayText: '第2問！',
-    characterComment: '',
+    boardContent: () => <Problem04Question showHighlight={false} />,
+    overlayText: '',
+    characterComment: '第2問！',
+    characterCommentImportant: true,
     role: 'subtitle',
     roleGroup: '4-1',
   },
@@ -191,17 +205,21 @@ export const mathLessonData: Scene[] = [
     id: 'scene14',
     durationInFrames: 49, // 1.624s * 30fps = 48.72
     audioSrc: staticFile('audio/iso_triangle/14-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_original.png')} />,
-    characterComment: 'xの角度は？',
+    boardContent: () => <Problem04Question showHighlight={true} animate={true} />,
+    characterComment: '$x$の角度は？',
     role: 'question',
     roleGroup: '4-1',
   },
+
+
+  // ...
+
   // 15: 頂角の外角は130度だね。
   {
     id: 'scene15',
     durationInFrames: 84, // 2.784s * 30fps = 83.52
     audioSrc: staticFile('audio/iso_triangle/15-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_red.png')} />,
+    boardContent: () => <Problem04Step1 animate={true} />,
     overlayText: '',
     characterComment: '外角 = 130°',
     role: 'explanation',
@@ -211,7 +229,7 @@ export const mathLessonData: Scene[] = [
     id: 'scene16',
     durationInFrames: 89, // 2.962s * 30fps = 88.86
     audioSrc: staticFile('audio/iso_triangle/16-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_red.png')} />,
+    boardContent: () => <Problem04Step1 animate={false} />, // Static end state
     overlayText: 'スリッパの法則',
     characterComment: '',
     role: 'explanation',
@@ -221,17 +239,20 @@ export const mathLessonData: Scene[] = [
     id: 'scene17',
     durationInFrames: 121, // 4.048s * 30fps = 121.44
     audioSrc: staticFile('audio/iso_triangle/17-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_step_2.png')} />,
+    boardContent: () => <Problem04Step1 animate={false} />, // Static end state
     overlayText: '',
     characterComment: '内角+内角=外角',
     role: 'explanation',
   },
+
+  // ...
+
   // 18: 二等辺三角形だから、
   {
     id: 'scene18',
     durationInFrames: 62, // 2.053s * 30fps = 61.59
     audioSrc: staticFile('audio/iso_triangle/18-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_step_1.png')} />,
+    boardContent: () => <Problem04Step2 step={1} />,
     overlayText: '',
     characterComment: '二等辺三角形',
     role: 'explanation',
@@ -241,9 +262,9 @@ export const mathLessonData: Scene[] = [
     id: 'scene19',
     durationInFrames: 60, // 2.0s * 30fps = 60
     audioSrc: staticFile('audio/iso_triangle/19-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_step_1.png')} />,
+    boardContent: () => <Problem04Step2 step={2} />,
     overlayText: '',
-    characterComment: '底角は同じx',
+    characterComment: '底角は同じ$x$',
     role: 'explanation',
   },
   // 20: つまり、底角xとxを足すと、
@@ -251,9 +272,9 @@ export const mathLessonData: Scene[] = [
     id: 'scene20',
     durationInFrames: 100, // 3.32s * 30fps = 99.6
     audioSrc: staticFile('audio/iso_triangle/20-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_step_2.png')} />,
+    boardContent: () => <Problem04Step2 step={3} />,
     overlayText: '',
-    characterComment: 'x + x = 130°',
+    characterComment: '$x + x = 130°$',
     role: 'explanation',
   },
   // 21: 外角の130度になるんだ。
@@ -261,7 +282,7 @@ export const mathLessonData: Scene[] = [
     id: 'scene21',
     durationInFrames: 72, // 2.4s * 30fps = 72
     audioSrc: staticFile('audio/iso_triangle/21-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_step_2.png')} />,
+    boardContent: () => <Problem04Step2 step={4} />,
     overlayText: '',
     characterComment: '',
     characterCommentContinuous: true,
@@ -272,7 +293,7 @@ export const mathLessonData: Scene[] = [
     id: 'scene22',
     durationInFrames: 65, // 2.173s * 30fps = 65.19
     audioSrc: staticFile('audio/iso_triangle/22-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_step_2.png')} />,
+    boardContent: () => <Problem04Step2 step={4} />,
     overlayText: '',
     characterComment: '130° ÷ 2',
     role: 'explanation',
@@ -282,9 +303,9 @@ export const mathLessonData: Scene[] = [
     id: 'scene23',
     durationInFrames: 52, // 1.738s * 30fps = 52.14
     audioSrc: staticFile('audio/iso_triangle/23-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_04_step_2.png')} />,
+    boardContent: () => <Problem04Step2 step={4} />,
     overlayText: '',
-    characterComment: 'x = 65°',
+    characterComment: '$x$ = 65°',
     characterCommentImportant: true,
     role: 'answer',
   },
