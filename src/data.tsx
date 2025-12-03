@@ -1,13 +1,6 @@
 import React from 'react';
 import { staticFile, Img } from 'remotion';
-import { Problem03Step1 } from './components/animations/Problem03Step1';
-import { Problem03Step2 } from './components/animations/Problem03Step2';
-import { Problem03Step3 } from './components/animations/Problem03Step3';
-import { Problem03Step4 } from './components/animations/Problem03Step4';
-import { Problem03Step5 } from './components/animations/Problem03Step5';
-import { Problem04Step1 } from './components/animations/Problem04Step1';
-import { Problem04Step2 } from './components/animations/Problem04Step2';
-import { Problem04Question } from './components/animations/Problem04Question';
+
 
 
 
@@ -17,15 +10,16 @@ export type Scene = {
   audioSrc: string;
   boardContent: () => React.ReactElement;
   overlayText?: string;
-  characterComment: string;
+  characterComment?: string;
   characterCommentColor?: string;
   characterCommentImportant?: boolean;
   characterCommentContinuous?: boolean;
   overlayTextContinuous?: boolean;
   overlayStrokeColor?: string;
   overlayYOffset?: number;
-  role?: 'maintitle' | 'subtitle' | 'answer' | 'explanation' | 'transition' | 'question';
+  role?: 'maintitle' | 'subtitle' | 'answer' | 'explanation' | 'transition' | 'question' | 'rhythm';
   roleGroup?: string;
+  pauseAfter?: number;
 };
 
 export const GLOBAL_TITLE = '二等辺三角形の性質';
@@ -52,271 +46,230 @@ const ImageBoard = ({ src }: { src: string }) => {
 };
 
 export const mathLessonData: Scene[] = [
-  // 00: 中2数学
+  // --- Problem 06 ---
+  // 00: 角をもとめよう！
   {
     id: 'scene0',
-    durationInFrames: 44, // 1.464s * 30fps = 43.92
-    audioSrc: staticFile('audio/iso_triangle/00-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_04_combined.png')} />,
-    overlayText: '',
-    characterComment: '',
-    role: 'maintitle',
+    durationInFrames: 60,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06.png')} />,
+    overlayText: '角を求めよう！',
+    characterComment: '動画を止めて計算してみてね',
+    role: 'transition',
   },
-  // 01: 二等辺三角形の基本問題2選！
+  // 01: まずは、一番大きな直角三角形ABCに注目！
   {
     id: 'scene1',
-    durationInFrames: 87, // 2.914s * 30fps = 87.42
-    audioSrc: staticFile('audio/iso_triangle/01-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_04_combined.png')} />,
+    durationInFrames: 90,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06_step1.png')} />,
     overlayText: '',
-    characterComment: '',
-    role: 'maintitle',
+    characterComment: '直角三角形ABCに注目！',
+    role: 'explanation',
   },
-  // 02: 第いち問！
+  // 02: 角Cは35度、角Bは直角マークがついているから90度だね。
   {
     id: 'scene2',
-    durationInFrames: 50, // 1.16s * 30fps = 34.8
-    audioSrc: staticFile('audio/iso_triangle/02-iso_03_04.wav'),
-    boardContent: () => <Problem03Step1 showHighlight={false} />,
+    durationInFrames: 120,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06_step1.png')} />,
     overlayText: '',
-    characterComment: '第1問！',
-    characterCommentImportant: true,
-    role: 'subtitle',
-    roleGroup: '3-1',
+    characterComment: '∠C=35°, ∠B=90°',
+    role: 'explanation',
   },
-
-  // 03: xの角度は？
+  // 03: 三角形の内角の和は180度だから、
   {
     id: 'scene3',
-    durationInFrames: 49, // 1.624s * 30fps = 48.72
-    audioSrc: staticFile('audio/iso_triangle/03-iso_03_04.wav'),
-    boardContent: () => <Problem03Step1 showHighlight={true} animate={true} />,
-    characterComment: '$x$の角度は？',
-    role: 'question',
-    roleGroup: '3-1',
+    durationInFrames: 90,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06_step1.png')} />,
+    overlayText: '',
+    characterComment: '内角の和 = 180°',
+    role: 'explanation',
   },
-  // 04: 一直線の角 = 180°
+  // 04: 角Aの大きさは、180度から90度と35度を引いて、55度になるよ。
   {
     id: 'scene4',
-    durationInFrames: 111, // 3.709s * 30fps = 111.27
-    audioSrc: staticFile('audio/iso_triangle/04-iso_03_04.wav'),
-    boardContent: () => <Problem03Step2 animate={true} />,
+    durationInFrames: 150,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06_step2.png')} />,
     overlayText: '',
-    characterComment: '一直線の角 = 180°',
+    characterComment: '180° - (90° + 35°) = 55°',
     role: 'explanation',
   },
-  // 05: だから、
+  // 05: 次は、左側にある三角形ABDに注目して。
   {
     id: 'scene5',
-    durationInFrames: 27, // 0.893s * 30fps = 26.79
-    audioSrc: staticFile('audio/iso_triangle/05-iso_03_04.wav'),
-    boardContent: () => <Problem03Step2 animate={false} />,
+    durationInFrames: 90,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06_step3.png')} />,
     overlayText: '',
-    characterComment: '',
+    characterComment: '三角形ABDに注目！',
     role: 'explanation',
   },
-  // 06: 180度から110度を引いて、
+  // 06: 辺ABと辺ADに、長さが同じという印がついているね。つまり、この三角形は二等辺三角形なんだ。
   {
     id: 'scene6',
-    durationInFrames: 81, // 2.698s * 30fps = 80.94
-    audioSrc: staticFile('audio/iso_triangle/06-iso_03_04.wav'),
-    boardContent: () => <Problem03Step3 animate={true} />,
+    durationInFrames: 150,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06_step3.png')} />,
     overlayText: '',
-    characterComment: '180° - 110°\n= 70°',
+    characterComment: 'AB = AD (二等辺三角形)',
     role: 'explanation',
   },
-  // 07: 180から110を引いて、70度だね。
+  // 07: 二等辺三角形の底角、つまり下の2つの角の大きさは同じになるよ。
   {
     id: 'scene7',
-    durationInFrames: 95, // 3.164s * 30fps = 94.92
-    audioSrc: staticFile('audio/iso_triangle/07-iso_03_04.wav'),
-    boardContent: () => <Problem03Step3 animate={false} />,
-    overlayText: '',
-    characterComment: '',
-    characterCommentContinuous: true,
-    role: 'explanation',
-  },
-  // 08: 二等辺三角形の底角は等しいから、
-  {
-    id: 'scene8',
-    durationInFrames: 90, // 3.008s * 30fps = 90.24
-    audioSrc: staticFile('audio/iso_triangle/08-iso_03_04.wav'),
-    boardContent: () => <Problem03Step4 showAngleB={false} />,
+    durationInFrames: 120,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06_step4.png')} />,
     overlayText: '',
     characterComment: '底角は等しい',
     role: 'explanation',
   },
-  // 09: 内角の和は180度だから、
+  // 08: 頂点の角Aは55度だから、残りの角度は、180度から55度を引いて125度。
+  {
+    id: 'scene8',
+    durationInFrames: 150,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06_step4.png')} />,
+    overlayText: '',
+    characterComment: '180° - 55° = 125°',
+    role: 'explanation',
+  },
+  // 09: これを半分こすればいいから、125割る2で、62.5。角xの大きさは、62.5度だね。
   {
     id: 'scene9',
-    durationInFrames: 88, // 2.92s * 30fps = 87.6
-    audioSrc: staticFile('audio/iso_triangle/09-iso_03_04.wav'),
-    boardContent: () => <Problem03Step4 showAngleB={true} animate={true} />,
+    durationInFrames: 180,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_06_step5.png')} />,
     overlayText: '',
-    characterComment: '',
-    role: 'explanation',
+    characterComment: '125° ÷ 2 = 62.5°',
+    characterCommentImportant: true,
+    role: 'answer',
   },
-  // 10: 三角形の内角の和は180度だから、
+
+  // --- Problem 07 ---
+  // 10: 続いて、第7問の解説。
   {
     id: 'scene10',
-    durationInFrames: 110, // 3.655s * 30fps = 109.65
-    audioSrc: staticFile('audio/iso_triangle/10-iso_03_04.wav'),
-    boardContent: () => <Problem03Step4 showAngleB={true} animate={false} />, // Static
-    overlayText: '内角の和 = 180°',
-    characterComment: '',
-    role: 'explanation',
+    durationInFrames: 60,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07.png')} />,
+    overlayText: '第7問！',
+    characterComment: '続いて第7問',
+    role: 'transition',
   },
-  // 11: 180から70と70を引いて、
+  // 11: こっちは、ACとBCの長さが等しい二等辺三角形だね。
   {
     id: 'scene11',
-    durationInFrames: 104, // 3.456s * 30fps = 103.68
-    audioSrc: staticFile('audio/iso_triangle/11-iso_03_04.wav'),
-    boardContent: () => <Problem03Step5 />, // Animates circles
-    characterComment: '180° - (70° + 70°)',
+    durationInFrames: 90,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step1.png')} />,
+    overlayText: '',
+    characterComment: 'AC = BC (二等辺三角形)',
     role: 'explanation',
   },
-  // 12: 答えは 40度！
+  // 12: まずは、下の2つの角、底角の大きさを出してみよう。
   {
     id: 'scene12',
-    durationInFrames: 66, // 2.186s * 30fps = 65.58
-    audioSrc: staticFile('audio/iso_triangle/12-iso_03_04.wav'),
-    boardContent: () => <Problem03Step5 animate={false} />, // Static end state
+    durationInFrames: 90,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step1.png')} />,
     overlayText: '',
-    characterComment: '$x$ = 40°',
-    characterCommentImportant: true,
-    role: 'answer',
+    characterComment: '底角を求めよう',
+    role: 'explanation',
   },
-
-
-  // 13: 第に問！
+  // 13: てっぺんの角が40度だから、180度から40度を引くと140度。
   {
     id: 'scene13',
-    durationInFrames: 50, // 1.16s * 30fps = 34.8
-    audioSrc: staticFile('audio/iso_triangle/13-iso_03_04.wav'),
-    boardContent: () => <Problem04Question showHighlight={false} />,
+    durationInFrames: 120,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step1.png')} />,
     overlayText: '',
-    characterComment: '第2問！',
-    characterCommentImportant: true,
-    role: 'subtitle',
-    roleGroup: '4-1',
+    characterComment: '180° - 40° = 140°',
+    role: 'explanation',
   },
-  // 14: xの角度は？
+  // 14: これを左右で同じように分けるから、140割る2で、70度。つまり、左の角Aも、右の角B全体も、どっちも70度ってこと。
   {
     id: 'scene14',
-    durationInFrames: 49, // 1.624s * 30fps = 48.72
-    audioSrc: staticFile('audio/iso_triangle/14-iso_03_04.wav'),
-    boardContent: () => <Problem04Question showHighlight={true} animate={true} />,
-    characterComment: '$x$の角度は？',
-    role: 'question',
-    roleGroup: '4-1',
+    durationInFrames: 180,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step2.png')} />,
+    overlayText: '',
+    characterComment: '140° ÷ 2 = 70°',
+    role: 'explanation',
   },
-
-
-  // ...
-
-  // 15: 頂角の外角は130度だね。
+  // 15: 次に、右下の角Bについている、黒い丸ポチを見て。これは、角を半分にしているよ、っていう合図なんだ。
   {
     id: 'scene15',
-    durationInFrames: 84, // 2.784s * 30fps = 83.52
-    audioSrc: staticFile('audio/iso_triangle/15-iso_03_04.wav'),
-    boardContent: () => <Problem04Step1 animate={true} />,
+    durationInFrames: 150,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step3.png')} />,
     overlayText: '',
-    characterComment: '外角 = 130°',
+    characterComment: '角の二等分線',
     role: 'explanation',
   },
-  // 16: ここで「スリッパの法則」を使おう！
+  // 16: 角B全体はさっき70度とわかったから、その半分の35度が、細い角の大きさになるね。
   {
     id: 'scene16',
-    durationInFrames: 89, // 2.962s * 30fps = 88.86
-    audioSrc: staticFile('audio/iso_triangle/16-iso_03_04.wav'),
-    boardContent: () => <Problem04Step1 animate={false} />, // Static end state
-    overlayText: 'スリッパの法則',
-    characterComment: '',
+    durationInFrames: 150,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step3.png')} />,
+    overlayText: '',
+    characterComment: '70° ÷ 2 = 35°',
     role: 'explanation',
   },
-  // 17: 2つの内角を足すと、向かい側の外角になるんだ。
+  // 17: 今度は、三角形ABDを見てみよう。
   {
     id: 'scene17',
-    durationInFrames: 121, // 4.048s * 30fps = 121.44
-    audioSrc: staticFile('audio/iso_triangle/17-iso_03_04.wav'),
-    boardContent: () => <Problem04Step1 animate={false} />, // Static end state
+    durationInFrames: 90,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step4.png')} />,
     overlayText: '',
-    characterComment: '内角+内角=外角',
+    characterComment: '三角形ABDに注目！',
     role: 'explanation',
   },
-
-  // ...
-
-  // 18: 二等辺三角形だから、
+  // 18: 左の角Aは70度、右の角Bの一部は35度だったよね。三角形の残りのひとつの角がx。
   {
     id: 'scene18',
-    durationInFrames: 62, // 2.053s * 30fps = 61.59
-    audioSrc: staticFile('audio/iso_triangle/18-iso_03_04.wav'),
-    boardContent: () => <Problem04Step2 step={1} />,
+    durationInFrames: 150,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step4.png')} />,
     overlayText: '',
-    characterComment: '二等辺三角形',
+    characterComment: '∠A=70°, ∠B(一部)=35°',
     role: 'explanation',
   },
-  // 19: 底角はどっちもx！
+  // 19: 180度から、70度と35度を引いてみて。残りは75度になるね。これが角xの答え。
   {
     id: 'scene19',
-    durationInFrames: 60, // 2.0s * 30fps = 60
-    audioSrc: staticFile('audio/iso_triangle/19-iso_03_04.wav'),
-    boardContent: () => <Problem04Step2 step={2} />,
+    durationInFrames: 180,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step5.png')} />,
     overlayText: '',
-    characterComment: '底角は同じ$x$',
-    role: 'explanation',
-  },
-  // 20: つまり、底角xとxを足すと、
-  {
-    id: 'scene20',
-    durationInFrames: 100, // 3.32s * 30fps = 99.6
-    audioSrc: staticFile('audio/iso_triangle/20-iso_03_04.wav'),
-    boardContent: () => <Problem04Step2 step={3} />,
-    overlayText: '',
-    characterComment: '$x + x = 130°$',
-    role: 'explanation',
-  },
-  // 21: 外角の130度になるんだ。
-  {
-    id: 'scene21',
-    durationInFrames: 72, // 2.4s * 30fps = 72
-    audioSrc: staticFile('audio/iso_triangle/21-iso_03_04.wav'),
-    boardContent: () => <Problem04Step2 step={4} />,
-    overlayText: '',
-    characterComment: '',
-    characterCommentContinuous: true,
-    role: 'explanation',
-  },
-  // 22: 130度を半分こして、
-  {
-    id: 'scene22',
-    durationInFrames: 65, // 2.173s * 30fps = 65.19
-    audioSrc: staticFile('audio/iso_triangle/22-iso_03_04.wav'),
-    boardContent: () => <Problem04Step2 step={4} />,
-    overlayText: '',
-    characterComment: '130° ÷ 2',
-    role: 'explanation',
-  },
-  // 23: 答えは 65度！
-  {
-    id: 'scene23',
-    durationInFrames: 52, // 1.738s * 30fps = 52.14
-    audioSrc: staticFile('audio/iso_triangle/23-iso_03_04.wav'),
-    boardContent: () => <Problem04Step2 step={4} />,
-    overlayText: '',
-    characterComment: '$x$ = 65°',
+    characterComment: '180° - (70°+35°) = 75°',
     characterCommentImportant: true,
     role: 'answer',
   },
-  // 24: これで完璧！
+  // 20: ちなみに、もうひとつ解き方があるよ。「スリッパの法則」や「外角の定理」って聞いたことあるかな？
   {
-    id: 'scene24',
-    durationInFrames: 41, // 1.368s * 30fps = 41.04
-    audioSrc: staticFile('audio/iso_triangle/24-iso_03_04.wav'),
-    boardContent: () => <ImageBoard src={staticFile('images/iso_triangle/problem_03_04_combined.png')} />,
-    overlayText: '完璧！',
-    characterComment: '',
-    role: 'transition',
+    id: 'scene20',
+    durationInFrames: 150,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step6.png')} />,
+    overlayText: '別解：スリッパの法則',
+    characterComment: '外角の定理',
+    role: 'explanation',
+  },
+  // 21: 右側の三角形で、40度と35度を足すと、その隣の外側の角xになる、っていう性質を使うと、足し算だけで一瞬で75度と出すこともできるよ。
+  {
+    id: 'scene21',
+    durationInFrames: 180,
+    audioSrc: '', // Dummy
+    boardContent: () => <ImageBoard src={staticFile('math_problems_centered/problem_07_step6.png')} />,
+    overlayText: '',
+    characterComment: '40° + 35° = 75°',
+    characterCommentImportant: true,
+    role: 'answer',
   },
 ];

@@ -50,7 +50,13 @@ export const Problem04Step2: React.FC<Problem04Step2Props> = ({ step }) => {
             <AngleArc
                 center={P4_A} start={P4_C} end={P4_D}
                 radius={0.6} label="130°"
-                textOffset={[0.75, 0]}
+                textOffset={[0, 0]}
+            />
+
+            <AngleArc
+                center={P4_B} start={P4_C} end={P4_A}
+                radius={0.5} label="$x$"
+                labelSize={30}
             />
 
             {/* Angles x at B and C */}

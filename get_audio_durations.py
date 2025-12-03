@@ -2,7 +2,7 @@ import wave
 import os
 import json
 
-audio_dir = r"c:\Users\user\Dropbox\gutto_contents\remotions\insta-short1\public\audio\iso_triangle"
+audio_dir = r"c:\Users\user\Dropbox\gutto_contents\remotions\insta-short1\public\audio\explain"
 files = sorted([f for f in os.listdir(audio_dir) if f.endswith(".wav")])
 durations = {}
 

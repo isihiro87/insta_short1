@@ -17,7 +17,7 @@ export const Problem03Step3: React.FC<{ animate?: boolean }> = ({ animate = true
             <AngleArc
                 center={P_C} start={P_A} end={P_D}
                 radius={0.6} label="110°"
-                textOffset={[0.75, 0]}
+                textOffset={[0, 0]}
             />
 
 

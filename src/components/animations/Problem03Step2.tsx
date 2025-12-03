@@ -17,12 +17,12 @@ export const Problem03Step2: React.FC<{ animate?: boolean }> = ({ animate = true
             <AngleArc
                 center={P_C} start={P_A} end={P_D}
                 radius={0.6} label="110°"
-                textOffset={[0.75, 0]}
+                textOffset={[0, 0]}
             />
 
             {/* 180 Arc */}
             <AngleArc
-                center={P_C} start={P_D} end={P_B}
+                center={P_C} start={P_B} end={P_D}
                 radius={0.45} label="180°"
                 color="red" textColor="red"
                 animate={animate} delay={15}

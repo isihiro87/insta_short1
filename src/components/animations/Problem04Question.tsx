@@ -17,7 +17,7 @@ export const Problem04Question: React.FC<{ showHighlight?: boolean, animate?: bo
             <AngleArc
                 center={P4_A} start={P4_C} end={P4_D}
                 radius={0.6} label="130°"
-                textOffset={[0.75, 0]}
+                textOffset={[0, 0]}
             />
 
             {/* Circle Highlight around x at B */}
