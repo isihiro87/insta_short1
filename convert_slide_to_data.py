@@ -51,7 +51,10 @@ def convert_html_to_jsx(text):
     # Replace <br> with <br />
     text = text.replace('<br>', '<br />')
     
-    # Replace <span style="color:red">...</span> with <span style={{ color: 'red' }}>...</span>
+    # Handle [色:赤]text -> <RedText>text</RedText>
+    # Matches [色:赤] followed by alphanumeric characters (e.g. er)
+    text = re.sub(r'\[色:赤\]([a-zA-Z0-9]+)', r'<RedText>\1</RedText>', text)
+    
     # Handle simple color styles
     def color_replacer(match):
         style_content = match.group(1)
@@ -61,26 +64,6 @@ def convert_html_to_jsx(text):
         color_match = re.search(r'color\s*:\s*([^;"]+)', style_content)
         if color_match:
             color_val = color_match.group(1).strip()
-            # Map common colors if needed, or use as is
-            if color_val == 'red':
-                color_val = '#E91E63' # Pinkish red used in samples
-            elif color_val == 'blue':
-                color_val = '#2196F3'
-            
-            return f"<span style={{{{ color: '{color_val}' }}}}>{content}</span>"
-        return match.group(0)
-
-    # Replace <span style="color:red">...</span> with <RedText>...</RedText>
-    # Handle simple color styles
-    def color_replacer(match):
-        style_content = match.group(1)
-        content = match.group(2)
-        
-        # Extract color value
-        color_match = re.search(r'color\s*:\s*([^;"]+)', style_content)
-        if color_match:
-            color_val = color_match.group(1).strip()
-            # Map common colors if needed
             if color_val == 'red' or color_val == '#E91E63':
                 return f"<RedText>{content}</RedText>"
             elif color_val == 'blue':
@@ -91,112 +74,7 @@ def convert_html_to_jsx(text):
 
     text = re.sub(r'<span style="([^"]+)">([^<]+)</span>', color_replacer, text)
     
-    # Also handle [色:赤]text format if it exists in the raw markdown before HTML conversion
-    # But here we are likely processing text that might already have some HTML or raw text
-    # The input 'text' comes from parse_markdown_table which reads raw markdown cells.
-    # Let's add a handler for [色:赤]text or text[色:赤]
-    # Pattern seems to be: text[色:赤] based on slide_content3.md line 6: interesting[色:赤]er
-    
-    # Regex for text[色:赤] -> <RedText>text</RedText>
-    # This is tricky because "text" might be just the preceding word.
-    # Let's look at the example: interesting[色:赤]er -> interesting<RedText>er</RedText> ?
-    # Or is it interesting[色:赤] -> <RedText>interesting</RedText> ?
-    # Line 6: interesting[色:赤]er
-    # Line 7: interesting[色:赤]er
-    # It seems [色:赤] applies to the PRECEDING character or word?
-    # Actually, looking at line 6: "interesting[色:赤]er"
-    # If I look at the file content again:
-    # 6: | 4 | 「より面白い」だから er をつけたい… | (維持)<br>↓<br>面白い：**interesting**<br>比較級：**interesting[色:赤]er**？ | いつも通りなら… |
-    # It seems likely it means "er" should be red? Or "interesting" is red?
-    # Usually [Color:Red] applies to the text inside?
-    # Wait, standard markdown doesn't have [色:赤]. This is a custom format.
-    # If it is "interesting[色:赤]er", maybe it means "interesting" is normal, and "er" is red?
-    # Or maybe it's a suffix instruction?
-    # Let's assume [色:赤] tags the *preceding* word? Or maybe it's `[色:赤]text`?
-    # Let's check line 6 again. `interesting[色:赤]er`.
-    # If I assume it's `interesting` + `[色:赤]` + `er`.
-    # Maybe it means "interesting" is red?
-    # Let's look at line 16: `This book is ( ) ( ) than that book.<br><br>面白い：**interesting**`
-    # Line 20: `This book is **more interesting** than that book.`
-    
-    # Let's look at another file or assume a standard behavior.
-    # Often in these custom formats: `text[色:赤]` might mean `text` is red.
-    # BUT `interesting[色:赤]er` looks like `interesting` is the word, and `[色:赤]` modifies it?
-    # Actually, `er` follows it.
-    # Maybe it is `interesting` (normal) `[色:赤]` (start red?) `er` (red text) `[色:end]`? No end tag.
-    
-    # Alternative interpretation: `[色:赤]` is a marker that the *previous* segment is red?
-    # Or maybe `interesting` is normal, and `er` is red?
-    # Let's look at the context: "interesting is a long word... er cannot be attached".
-    # So `interesting-er`. The `er` is the suffix being discussed.
-    # So likely `er` is the target, but `[色:赤]` is *before* it? `interesting[色:赤]er`
-    # No, `[色:赤]` is inside the word?
-    # Let's assume for now that `[色:赤]` turns the *preceding* word red.
-    # `interesting` -> red? No, that would be the whole word.
-    # `er` is the suffix.
-    # Maybe `[色:赤]` means "Make the NEXT text red"?
-    # `interesting` [RED] `er` ? -> `interesting` <RedText>er</RedText>
-    
-    # Let's try to find if there are other examples.
-    # Line 4: `This book is ( ) ( ) than that book.`
-    # Line 16: `This book is ( ) ( ) than that book.`
-    
-    # Let's look at `convert_slide_to_data.py` again. It didn't have logic for `[色:赤]`.
-    # It only had logic for `<span style="color:red">`.
-    # So `[色:赤]` is likely raw text that needs conversion.
-    
-    # Let's try to handle `text[色:赤]` -> `<RedText>text</RedText>`
-    # Regex: `(\w+)\[色:赤\]` -> `<RedText>\1</RedText>`
-    # Test: `interesting[色:赤]er` -> `interesting<RedText>er</RedText>`? No, `er` is after.
-    # If it matches `interesting`, then `interesting` becomes red.
-    # If the user wants `er` to be red, they would write `interesting er[色:赤]`.
-    
-    # Let's look at the file content of `slide_content3.md` again carefully.
-    # `interesting[色:赤]er`
-    # If `[色:赤]` modifies the *preceding* string, then `interesting` becomes red.
-    # But the lesson is about "interesting is too long, so don't add er".
-    # So maybe the "er" part is the mistake/focus?
-    # But "er" is *after* the tag in `interesting[色:赤]er`.
-    # Wait, `interesting` is before.
-    # Maybe it means "Make 'interesting' red"?
-    
-    # Let's check if I can find other files to infer the rule.
-    # Or I can just ask the user? No, I should try to infer or use a safe fallback.
-    # The user said "定型的に行えるところはpythonで".
-    # If I am unsure, I can leave it for AI?
-    # But the user specifically asked to modify the script.
-    
-    # Let's add a generic replacer for `[色:赤]` to `<RedText>` if it wraps something?
-    # Maybe it's `[色:赤]text[色:終了]`? No.
-    
-    # Let's assume `[色:赤]` is just a marker that needs to be replaced by `<RedText>` and we need to figure out what it wraps.
-    # If I replace `[色:赤]` with `<RedText>` and assume it wraps the *following* word?
-    # `interesting` <RedText> `er` ?
-    # That would make `er` red. That makes sense in the context of "adding er".
-    # Let's try: `\[色:赤\](\w+)` -> `<RedText>\1</RedText>`
-    # But in `interesting[色:赤]er`, the tag is *between* them.
-    # If it is `interesting` `[色:赤]` `er`.
-    # If I replace `[色:赤]` with `<RedText>`, I get `interesting<RedText>er`.
-    # I need a closing tag `</RedText>`.
-    # If I assume it wraps the *rest of the word*?
-    # `interesting<RedText>er</RedText>`
-    
-    # Let's implement a regex that turns `[色:赤]` into `<RedText>` and adds `</RedText>` at the end of the word boundary?
-    # Regex: `\[色:赤\](\w+)`
-    # Matches `[色:赤]er`.
-    # So `interesting[色:赤]er` -> `interesting` + match(`[色:赤]er`).
-    # This seems plausible.
-    
-    text = re.sub(r'\[色:赤\](\w+)', r'<RedText>\1</RedText>', text)
-    
-    # Also handle **text** -> <strong>text</strong> or similar if needed, but usually markdown handles it.
-    # The script currently doesn't convert markdown bold to HTML/JSX.
-    # `**text**` remains `**text**` in the output?
-    # `EnglishLessonBoard` might handle markdown?
-    # `EnglishLessonBoard` takes `sentences` which are `<span>...</span>`.
-    # If `<span>**text**</span>` is passed, it depends on CSS.
-    # Usually we want `<b>` or `<strong>`.
-    
+    # Handle bold **text** -> <b>text</b>
     text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', text)
     
     return text
@@ -211,134 +89,110 @@ def clean_text(text):
     lines = [line.strip() for line in text.split('\n') if line.strip()]
     return lines
 
-def generate_tsx_content(rows, file_index, topic, audio_base_path):
-    # audio_base_path is passed from main
-    audio_base = f"{audio_base_path}{file_index}_"
-    
+def generate_tsx_content(rows, file_index, topic, audio_base_path, durations={}):
+    audio_base = audio_base_path
     scenes = []
+    
+    # Determine audio prefix from audio_base_path
+    # Example: audio/explain/part -> part
+    audio_prefix = os.path.basename(audio_base_path)
     
     for i, row in enumerate(rows):
         scene_id = f"scene-{file_index}-{i+1:03d}"
-        duration = 150 # Default duration from reference
-        audio_src = f"staticFile(`${{AUDIO_BASE}}{i+1:02d}.wav`)" # Reference uses 01.wav not 001.wav
+        
+        # Calculate duration
+        duration = 150 # Default
+        audio_filename = f"{audio_prefix}{i+1:03d}.wav"
+        if audio_filename in durations:
+            duration_sec = durations[audio_filename]
+            duration = int(duration_sec * 30)
+            
+        audio_src = f"staticFile(`${{AUDIO_BASE}}{i+1:03d}.wav`)"
         
         raw_slide_text = row.get('スライドテキスト', '')
         script = row.get('読み上げ原稿', '')
-        direction = row.get('画像・演出指示', '')
         supplementary = row.get('補足セリフ', '')
+        layout = row.get('レイアウト', 'standard').strip()
+        if not layout:
+            layout = 'standard'
         
-        # Clean text
-        # We don't need to resolve (維持) strictly if we are just extracting lines, 
-        # but if the user wants the full text, we might need to.
-        # However, the reference file Scene 3 has "この本は..." which implies (維持) was resolved to the previous full text.
-        # BUT Scene 4 has ONLY formula.
-        # Let's try to resolve (維持) simply.
-        
-        # For now, let's just process the current text. 
-        # If (維持) is present, we might want to carry over the *previous* japaneseText/englishText?
-        # This is complex to do perfectly without state.
-        # Let's implement a simple state tracker.
-        
-        # State
-        # last_japanese_text
-        # last_english_text
-        # But we are inside a loop. We need to initialize them outside if we want persistence.
-        # But the function is called once per file.
-        
-        # Let's simplify: 
-        # 1. Clean text.
-        # 2. Check for formula.
-        # 3. If not formula, try to split into JP/EN.
-        
-        current_text_lines = clean_text(raw_slide_text)
-        
-        # Extract speechBubble
         speech_bubble_prop = ""
         if supplementary and supplementary.strip():
             speech_bubble_prop = f'speechBubble="{supplementary.strip()}"'
             
-        # Image src
-        image_src = "staticFile('images/quiz_intro.png')" # Default from reference
-        if "イラスト" in direction:
-            image_src = "staticFile('images/illustration.png')"
-            
-        # Check for formula
-        is_formula = False
-        if any('+' in line for line in current_text_lines):
-            is_formula = True
-            
-        board_content = ""
+        image_src = "staticFile('images/quiz_intro.png')" 
         
-        if is_formula:
-            # Generate FormulaContainer
-            formula_items = []
-            for line in current_text_lines:
-                parts = line.split('+')
-                for j, part in enumerate(parts):
-                    clean_part = part.strip()
-                    clean_part = convert_html_to_jsx(clean_part)
-                    if clean_part:
-                        formula_items.append(f'<FormulaItem>{clean_part}</FormulaItem>')
-                    if j < len(parts) - 1:
-                        formula_items.append('<FormulaText>+</FormulaText>')
+        board_props = []
+        board_props.append(f'layout="{layout}"')
+        board_props.append(f'imageSrc={{{image_src}}}')
+        if speech_bubble_prop:
+            board_props.append(speech_bubble_prop)
+
+        # Parse content based on layout
+        if layout == 'horizontal-split':
+            # Expect "Left: ... Right: ..."
+            text_norm = raw_slide_text.replace('<br>', '\n').replace('<br />', '\n')
             
-            formula_content = "\n                        ".join(formula_items)
+            left_match = re.search(r'Left[:：](.*?)(?=Right[:：]|$)', text_norm, re.DOTALL | re.IGNORECASE)
+            right_match = re.search(r'Right[:：](.*)', text_norm, re.DOTALL | re.IGNORECASE)
             
-            board_content = f'''<EnglishLessonBoard
-                step="title"
-                formula={{
-                    <FormulaContainer>
-                        {formula_content}
-                    </FormulaContainer>
-                }}
-                imageSrc={{{image_src}}}
-                {speech_bubble_prop}
-            />'''
-        else:
-            # Not a formula. Try to determine Japanese and English text.
-            # Heuristic:
-            # If line contains Japanese characters -> Japanese Text
-            # If line contains mostly English -> English Text
-            # If multiple lines, join them?
+            if left_match:
+                left_content = convert_html_to_jsx(left_match.group(1).strip().replace('\n', '<br />'))
+                board_props.append(f'leftContent={{<>{left_content}</>}}')
+            if right_match:
+                right_content = convert_html_to_jsx(right_match.group(1).strip().replace('\n', '<br />'))
+                board_props.append(f'rightContent={{<>{right_content}</>}}')
+                
+        elif layout == 'vertical-split':
+            # Expect "Top: ... Bottom: ..."
+            text_norm = raw_slide_text.replace('<br>', '\n').replace('<br />', '\n')
             
+            top_match = re.search(r'Top[:：](.*?)(?=Bottom[:：]|$)', text_norm, re.DOTALL | re.IGNORECASE)
+            bottom_match = re.search(r'Bottom[:：](.*)', text_norm, re.DOTALL | re.IGNORECASE)
+            
+            if top_match:
+                top_content = convert_html_to_jsx(top_match.group(1).strip().replace('\n', '<br />'))
+                board_props.append(f'topContent={{<>{top_content}</>}}')
+            if bottom_match:
+                bottom_content = convert_html_to_jsx(bottom_match.group(1).strip().replace('\n', '<br />'))
+                board_props.append(f'bottomContent={{<>{bottom_content}</>}}')
+
+        elif layout == 'vertical-list':
+            # Expect list items
+            lines = clean_text(raw_slide_text)
+            items = []
+            for line in lines:
+                if line.startswith('・') or line.startswith('-'):
+                    item_text = line.lstrip('・- ').strip()
+                    items.append(convert_html_to_jsx(item_text))
+            
+            if items:
+                items_jsx = ", ".join([f"<>{item}</>" for item in items])
+                board_props.append(f'items={{[{items_jsx}]}}')
+
+        else: # standard
+            current_text_lines = clean_text(raw_slide_text)
             jp_lines = []
             en_lines = []
-            
             for line in current_text_lines:
-                # Simple check for Japanese characters (Hiragana, Katakana, Kanji)
                 if re.search(r'[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]', line):
                     jp_lines.append(line)
                 else:
                     en_lines.append(line)
             
-            # If no JP lines found but we have lines, maybe it's all English?
-            # Or if no EN lines found?
-            
-            # Construct props
-            jp_prop = ""
             if jp_lines:
-                # Join with <br> or just take the first?
-                # Reference uses a single string for japaneseText
-                jp_text = "".join(jp_lines) # Simple join
-                jp_text = convert_html_to_jsx(jp_text)
-                jp_prop = f'japaneseText="{jp_text}"'
-                
-            en_prop = ""
+                jp_text = convert_html_to_jsx("".join(jp_lines))
+                board_props.append(f'japaneseText={{<>{jp_text}</>}}')
             if en_lines:
-                # English text is often wrapped in <>...</> in reference
-                en_text_inner = " ".join(en_lines)
-                en_text_inner = convert_html_to_jsx(en_text_inner)
-                en_prop = f'englishText={{<>{en_text_inner}</>}}'
-            
-            # If both empty (e.g. (維持) only and we stripped it), maybe use previous?
-            # For now, if empty, it will just render empty props.
-            
-            board_content = f'''<EnglishLessonBoard
+                en_text = convert_html_to_jsx(" ".join(en_lines))
+                board_props.append(f'englishText={{<>{en_text}</>}}')
+
+        # Join props with newline and indentation
+        props_str = "\n                ".join(board_props)
+        
+        board_content = f'''<EnglishLessonBoard
                 step="title"
-                {jp_prop}
-                {en_prop}
-                imageSrc={{{image_src}}}
-                {speech_bubble_prop}
+                {props_str}
             />'''
 
         scene_code = f'''    {{
@@ -406,6 +260,18 @@ def main():
         print(f"No slide_content files found.")
         return
 
+    # Load audio durations if exists
+    durations = {}
+    durations_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'audio_durations.json')
+    if os.path.exists(durations_path):
+        import json
+        try:
+            with open(durations_path, 'r', encoding='utf-8') as f:
+                durations = json.load(f)
+            print(f"Loaded durations from {durations_path}")
+        except Exception as e:
+            print(f"Warning: Could not load audio_durations.json: {e}")
+
     for slide_file in slide_files:
         filename = os.path.basename(slide_file)
         # Extract number
@@ -424,7 +290,7 @@ def main():
             continue
             
         # Pass topic and audio_base to generate function
-        tsx_content = generate_tsx_content(rows, file_index, topic, audio_base)
+        tsx_content = generate_tsx_content(rows, file_index, topic, audio_base, durations)
         
         if output_file:
             output_filename = output_file

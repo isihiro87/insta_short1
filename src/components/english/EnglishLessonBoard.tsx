@@ -26,6 +26,7 @@ interface EnglishLessonBoardProps {
     formula?: React.ReactNode;
     bottomComment?: React.ReactNode;
     speechBubble?: React.ReactNode;
+    speechBubbleDelay?: number;
 
     // New layout props
     layout?: 'standard' | 'symmetrical' | 'vertical-split' | 'horizontal-split' | 'vertical-list' | 'quiz-choices' | 'table' | 'timeline' | 'dialogue';
@@ -46,8 +47,10 @@ interface EnglishLessonBoardProps {
     choices?: string[];
     tableData?: string[][];
     timelineEvents?: { label: string; text: string }[];
-    dialogueLines?: { speaker: string; text: string; side: 'left' | 'right'; icon?: string }[];
+    dialogueLines?: { speaker: string; text: string; side: 'left' | 'right'; iconSrc?: string }[];
     themeText?: string | React.ReactNode;
+    textLines?: { text: string; isEnglish?: boolean }[];
+    minFontSize?: number;
 }
 
 // Helper to extract text length from ReactNode
@@ -68,39 +71,32 @@ const getTextLength = (node: string | React.ReactNode): number => {
     return 0;
 };
 
-// Helper to calculate dynamic font size number
-const calculateFontSize = (
-    text: string | React.ReactNode,
-    maxSize: number,
-    minSize: number = 30,
-    charsAtMax: number = 10
-): number => {
-    const length = getTextLength(text);
-    if (length === 0) return maxSize;
-
-    // Target size calculation
-    // Formula: (charsAtMax / length) * maxSize
-    let targetSize = Math.floor((charsAtMax / length) * maxSize * 1.2);
-    return Math.min(maxSize, Math.max(minSize, targetSize));
+// Fixed font sizes based on role
+const FONT_SIZES = {
+    MAIN_TITLE: 70,
+    SUB_TITLE: 40,
+    JAPANESE_TEXT: 60,
+    ENGLISH_TEXT: 60,
+    QUIZ_CHOICE: 45,
+    TABLE_CELL: 50,
+    THEME_TEXT: 60,
+    VERTICAL_SPLIT: 80,
+    HORIZONTAL_SPLIT: 60,
+    LIST_ITEM: 60,
+    TIMELINE_TEXT: 50,
+    DIALOGUE_TEXT: 50,
 };
 
-// Helper to calculate dynamic style
-const getDynamicStyle = (
-    text: string | React.ReactNode,
-    maxSize: number,
-    minSize: number = 30,
-    charsAtMax: number = 10 // How many chars fit at max size?
-): React.CSSProperties => {
-    const fontSize = calculateFontSize(text, maxSize, minSize, charsAtMax);
-    const isMinSize = fontSize <= minSize;
-
+// Helper to get common text style
+const getTextStyle = (fontSize: number): React.CSSProperties => {
     return {
         fontSize: `${fontSize}px`,
-        whiteSpace: isMinSize ? 'normal' : 'nowrap', // Wrap if at min size, else nowrap
-        wordBreak: isMinSize ? 'break-word' : 'normal',
+        whiteSpace: 'pre-wrap', // Always wrap
+        wordBreak: 'break-word',
         lineHeight: '1.3',
     };
 };
+
 
 export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
     step,
@@ -123,6 +119,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
     formula,
     bottomComment,
     speechBubble,
+    speechBubbleDelay = 0,
     layout = 'standard',
     centerSymbol,
     topContent,
@@ -139,6 +136,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
     timelineEvents,
     dialogueLines,
     themeText,
+    textLines,
 }) => {
     const frame = useCurrentFrame();
 
@@ -197,14 +195,27 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        justifyContent: 'center',
+                        justifyContent: 'flex-start', // Move to top
                         width: '100%',
                         gap: '30px',
-                        padding: '20px',
+                        padding: '40px 20px 20px 20px', // Increased top padding
                     }}>
+                        {/* Main Title (Simple Text) */}
+                        {mainTitle && (
+                            <div style={{
+                                width: '100%',
+                                textAlign: 'center',
+                                marginBottom: '10px',
+                                fontWeight: 'bold',
+                                color: '#333',
+                                ...getTextStyle(FONT_SIZES.MAIN_TITLE),
+                            }}>
+                                {mainTitle}
+                            </div>
+                        )}
                         {items?.map((item, index) => (
                             <div key={index} style={{
-                                ...getDynamicStyle(item, 60, 30, 20), // Max 60, Min 30, 20 chars fit
+                                ...getTextStyle(FONT_SIZES.LIST_ITEM),
                                 fontWeight: 'bold',
                                 color: '#333',
                                 backgroundColor: '#F5F5F5',
@@ -266,7 +277,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                             }}>
                                 {japaneseText && (
                                     <div style={{
-                                        ...getDynamicStyle(japaneseText, 60, 30, 12),
+                                        ...getTextStyle(FONT_SIZES.JAPANESE_TEXT),
                                         fontWeight: 'bold',
                                         textAlign: 'center',
                                         width: '90%',
@@ -276,7 +287,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                 )}
                                 {englishText && (
                                     <div style={{
-                                        ...getDynamicStyle(englishText, 80, 35, 15),
+                                        ...getTextStyle(FONT_SIZES.ENGLISH_TEXT),
                                         fontWeight: 'bold',
                                         fontFamily: 'Roboto, sans-serif',
                                         textAlign: 'center',
@@ -297,13 +308,13 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                             gap: '20px', // Reduced gap for wrapping
                             width: '100%',
                             padding: '20px',
-                            backgroundColor: '#FAFAFA',
-                            borderTop: '2px solid #eee',
+                            // backgroundColor: '#FAFAFA', // Removed background
+                            // borderTop: '2px solid #eee', // Removed border
                             borderRadius: '20px', // Add border radius for better look
                         }}>
                             {choices?.map((choice, index) => (
                                 <div key={index} style={{
-                                    ...getDynamicStyle(choice, 45, 25, 10), // Slightly smaller max size
+                                    ...getTextStyle(FONT_SIZES.QUIZ_CHOICE),
                                     fontWeight: 'bold',
                                     padding: '15px 30px',
                                     backgroundColor: 'white',
@@ -347,7 +358,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                                 padding: '20px',
                                                 backgroundColor: rowIndex === 0 ? '#E3F2FD' : 'white',
                                                 fontWeight: rowIndex === 0 ? 'bold' : 'normal',
-                                                ...getDynamicStyle(cell, 50, 25, 10), // Adjust for table cells
+                                                ...getTextStyle(FONT_SIZES.TABLE_CELL),
                                             }}>
                                                 {cell}
                                             </td>
@@ -398,7 +409,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                     marginBottom: '15px',
                                 }} />
                                 <div style={{
-                                    ...getDynamicStyle(event.text, 50, 30, 10),
+                                    ...getTextStyle(FONT_SIZES.TIMELINE_TEXT),
                                     fontWeight: 'bold',
                                 }}>
                                     {event.text}
@@ -440,7 +451,20 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                     border: '3px solid #ccc',
                                     flexShrink: 0,
                                 }}>
-                                    {line.speaker[0]}
+                                    {line.iconSrc ? (
+                                        <img
+                                            src={line.iconSrc}
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                borderRadius: '50%',
+                                                objectFit: 'cover',
+                                            }}
+                                            alt={line.speaker}
+                                        />
+                                    ) : (
+                                        line.speaker[0]
+                                    )}
                                 </div>
                                 {/* Bubble */}
                                 <div style={{
@@ -451,7 +475,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                     borderTopRightRadius: line.side === 'right' ? '0' : '25px',
                                     maxWidth: '75%',
                                     boxShadow: '0 3px 6px rgba(0,0,0,0.08)',
-                                    ...getDynamicStyle(line.text, 50, 30, 20),
+                                    ...getTextStyle(FONT_SIZES.DIALOGUE_TEXT),
                                 }}>
                                     <div style={{ fontSize: '28px', color: '#888', marginBottom: '8px' }}>{line.speaker}</div>
                                     <div>{line.text}</div>
@@ -475,7 +499,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                             flex: 1,
                             textAlign: 'center',
                             fontWeight: 'bold',
-                            ...getDynamicStyle(englishText || leftContent, 80, 40, 10),
+                            ...getTextStyle(FONT_SIZES.ENGLISH_TEXT),
                         }}>
                             {englishText || leftContent}
                         </div>
@@ -486,25 +510,15 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                             flex: 1,
                             textAlign: 'center',
                             fontWeight: 'bold',
-                            ...getDynamicStyle(japaneseText || rightContent, 70, 35, 10),
+                            ...getTextStyle(FONT_SIZES.JAPANESE_TEXT),
                         }}>
                             {japaneseText || rightContent}
                         </div>
                     </div>
                 );
             case 'vertical-split':
-                // Calculate unified font size for top and bottom
-                // Increased maxSize to 100 as requested
-                const topSize = calculateFontSize(topContent, 100, 30, 10);
-                const bottomSize = calculateFontSize(bottomContent, 100, 30, 10);
-                const unifiedSize = Math.min(topSize, bottomSize);
-                const isMinSize = unifiedSize <= 30;
-
                 const unifiedStyle: React.CSSProperties = {
-                    fontSize: `${unifiedSize}px`,
-                    whiteSpace: isMinSize ? 'normal' : 'nowrap',
-                    wordBreak: isMinSize ? 'break-word' : 'normal',
-                    lineHeight: '1.3',
+                    ...getTextStyle(FONT_SIZES.VERTICAL_SPLIT),
                     textAlign: 'center',
                     width: '90%',
                 };
@@ -590,7 +604,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                     </div>
                                 )}
                                 <div style={{
-                                    ...getDynamicStyle(leftContent, 90, 30, 8), // Increased max size, fewer chars at max
+                                    ...getTextStyle(FONT_SIZES.HORIZONTAL_SPLIT),
                                     textAlign: 'center',
                                     width: '90%',
                                 }}>
@@ -611,7 +625,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                     </div>
                                 )}
                                 <div style={{
-                                    ...getDynamicStyle(rightContent, 90, 30, 8), // Increased max size, fewer chars at max
+                                    ...getTextStyle(FONT_SIZES.HORIZONTAL_SPLIT),
                                     textAlign: 'center',
                                     width: '90%',
                                 }}>
@@ -643,21 +657,27 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                 <div style={{
                                     border: '4px solid #F06292', // Pink to match subTopic
                                     borderRadius: '20px',
-                                    padding: '25px 40px', // Increased vertical padding (approx 1.25x of 15px is ~19px, setting to 25px for clear effect)
+                                    padding: '20px 40px',
                                     backgroundColor: '#fff',
+                                    display: 'flex', // Use flex for vertical centering
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    minHeight: '180px', // Ensure at least 2 lines height (approx 52px * 1.3 * 2 + padding)
                                     textAlign: 'center',
-                                    fontSize: '40px', // Larger font
                                     fontWeight: 'bold',
                                     color: '#333',
                                     boxShadow: '0 4px 0 rgba(0,0,0,0.1)',
                                     whiteSpace: 'pre-wrap',
                                     lineHeight: '1.3',
                                     width: '90%', // Wider box
+                                    ...getTextStyle(FONT_SIZES.THEME_TEXT),
                                 }}>
                                     {themeText}
                                 </div>
                             </div>
-                        )}
+                        )
+                        }
 
                         {/* Main Content Area */}
                         <div style={{
@@ -693,29 +713,54 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                 gap: '25px',
                                 alignItems: 'center',
                             }}>
-                                {japaneseText && (
+                                {textLines && textLines.length > 0 ? (
                                     <div style={{
-                                        color: '#333',
-                                        fontWeight: 'bold',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: '15px',
                                         width: '100%',
-                                        textAlign: 'center',
-                                        ...getDynamicStyle(japaneseText, 60, 30, 12),
+                                        alignItems: 'center',
                                     }}>
-                                        {japaneseText}
+                                        {textLines.map((line, index) => (
+                                            <div key={index} style={{
+                                                fontWeight: 'bold',
+                                                fontFamily: line.isEnglish ? 'Roboto, sans-serif' : 'Noto Sans JP',
+                                                color: '#333',
+                                                width: '100%',
+                                                textAlign: 'center',
+                                                ...getTextStyle(line.isEnglish ? FONT_SIZES.ENGLISH_TEXT : FONT_SIZES.JAPANESE_TEXT),
+                                            }}>
+                                                {line.text}
+                                            </div>
+                                        ))}
                                     </div>
-                                )}
-                                {englishText && (
-                                    <div style={{
-                                        fontWeight: 'bold',
-                                        fontFamily: 'Roboto, sans-serif',
-                                        color: '#333',
-                                        width: '100%',
-                                        textAlign: 'center',
-                                        marginTop: '15px',
-                                        ...getDynamicStyle(englishText, 80, 35, 15),
-                                    }}>
-                                        {englishText}
-                                    </div>
+                                ) : (
+                                    <>
+                                        {japaneseText && (
+                                            <div style={{
+                                                color: '#333',
+                                                fontWeight: 'bold',
+                                                width: '100%',
+                                                textAlign: 'center',
+                                                ...getTextStyle(FONT_SIZES.JAPANESE_TEXT),
+                                            }}>
+                                                {japaneseText}
+                                            </div>
+                                        )}
+                                        {englishText && (
+                                            <div style={{
+                                                fontWeight: 'bold',
+                                                fontFamily: 'Roboto, sans-serif',
+                                                color: '#333',
+                                                width: '100%',
+                                                textAlign: 'center',
+                                                marginTop: '15px',
+                                                ...getTextStyle(FONT_SIZES.ENGLISH_TEXT),
+                                            }}>
+                                                {englishText}
+                                            </div>
+                                        )}
+                                    </>
                                 )}
 
                                 {/* Formula Section */}
@@ -753,7 +798,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                                 color: '#333',
                                                 minWidth: '250px',
                                                 textAlign: 'center',
-                                                ...getDynamicStyle(w, 50, 30, 10),
+                                                ...getTextStyle(FONT_SIZES.ENGLISH_TEXT),
                                                 ...((sentenceDelay > 0 && frame < sentenceDelay + (i * 5)) ? { opacity: 0 } : { opacity: 1, transition: 'opacity 0.3s' })
                                             }}>
                                                 {w}
@@ -767,7 +812,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '25px' }}>
                                         {sentences.map((sent, index) => (
                                             <div key={index} style={{
-                                                ...getDynamicStyle(sent, 50, 30, 20),
+                                                ...getTextStyle(FONT_SIZES.ENGLISH_TEXT),
                                                 ...(sentenceDelay > 0 ? { opacity: frame > sentenceDelay ? 1 : 0, transition: 'opacity 0.5s' } : {})
                                             }}>
                                                 {sent}
@@ -785,14 +830,14 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                         width: '100%',
                                         borderTop: '2px solid #f0f0f0',
                                         paddingTop: '25px',
-                                        ...getDynamicStyle(explanation, 40, 25, 30),
+                                        ...getTextStyle(FONT_SIZES.SUB_TITLE),
                                     }}>
                                         {explanation}
                                     </div>
                                 )}
                             </div>
                         </div>
-                    </div>
+                    </div >
                 );
         }
     };
@@ -927,6 +972,8 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                     justifyContent: 'center',
                     textAlign: 'center',
                     lineHeight: '1.3',
+                    opacity: frame < speechBubbleDelay ? 0 : 1,
+                    transition: 'opacity 0.3s ease-in-out',
                 }}>
                     {speechBubble}
                     {/* Tail */}

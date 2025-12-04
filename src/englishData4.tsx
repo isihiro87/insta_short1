@@ -1,5 +1,5 @@
 import { staticFile } from 'remotion';
-import { QuizBoard, EnglishLessonBoard, RedText, FormulaContainer, FormulaItem, FormulaText, CenteredList, RedCross } from './components/english';
+import { QuizBoard, EnglishLessonBoard, RedText, FormulaContainer, FormulaItem, FormulaText, CenteredList, CrossedText } from './components/english';
 import { Scene } from './data';
 
 export type { Scene };
@@ -18,8 +18,7 @@ export const englishLessonData: Scene[] = [
                 layout="standard"
                 imageSrc={staticFile('images/quiz_intro.png')}
                 speechBubble="さあ、解けるかな？"
-                japaneseText={<><span style={{ fontSize: '50px' }}>この映画は日本で一番人気があります。</span></>}
-                englishText={<>This movie is (　) (　) (　) in Japan.</>}
+                japaneseText={<>次の日本語を英語にしなさい。</>}
             />
         ),
         pauseAfter: 15,
@@ -33,12 +32,12 @@ export const englishLessonData: Scene[] = [
                 step="title"
                 layout="standard"
                 imageSrc={staticFile('images/quiz_intro.png')}
-                speechBubble="さあ、解けるかな？"
-                japaneseText={<><span style={{ fontSize: '50px' }}>この映画は日本で一番人気があります。</span></>}
-                englishText={<>This movie is (　) (　) (　) in Japan.</>}
+                speechBubble="3語入るよ！"
+                japaneseText={<>次の日本語を英語にしなさい。この映画は日本で一番人気があります。</>}
+                englishText={<>This movie is ( ) ( ) ( ) in Japan.</>}
             />
         ),
-        pauseAfter: 50,
+        pauseAfter: 15,
     },
     {
         id: 'scene-4-003',
@@ -48,8 +47,8 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<>人気がある</>}
-                englishText={<>popular</>}
+                imageSrc={staticFile('images/quiz_intro.png')}
+                japaneseText={<>人気がある：popular</>}
             />
         ),
         pauseAfter: 15,
@@ -62,8 +61,8 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<>一番人気がある</>}
-                englishText={<>popular - est？</>}
+                imageSrc={staticFile('images/quiz_intro.png')}
+                japaneseText={<>人気がある：popular最上級？ popularest (?)</>}
             />
         ),
         pauseAfter: 15,
@@ -76,9 +75,8 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<>一番人気がある</>}
-                englishText={<>popular - est？</>}
-                speechBubble="長い！"
+                imageSrc={staticFile('images/quiz_intro.png')}
+                japaneseText={<>人気がある：popular最上級？ popularest (?)<RedText>長い単語！</RedText></>}
             />
         ),
         pauseAfter: 15,
@@ -91,9 +89,10 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                speechBubble=""
-                japaneseText={<>一番人気がある</>}
-                englishText={<>popular - <RedCross>est</RedCross>？</>}
+                imageSrc={staticFile('images/quiz_intro.png')}
+                speechBubble="estはダメなんだ。"
+                japaneseText={<>人気がある：popular最上級？ popularest (?)</>}
+                englishText={<><RedText>NG!</RedText></>}
             />
         ),
         pauseAfter: 15,
@@ -106,8 +105,8 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<>一番人気がある</>}
-                englishText={<>popular - <RedCross>est</RedCross>？</>}
+                imageSrc={staticFile('images/quiz_intro.png')}
+                japaneseText={<>(維持)</>}
             />
         ),
         pauseAfter: 15,
@@ -120,9 +119,10 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="vertical-split"
-                speechBubble="mostを使うよ。"
-                topContent={<><RedText>×</RedText> popularest</>}
-                bottomContent={<><RedText>〇</RedText> most popular</>}
+                imageSrc={staticFile('images/quiz_intro.png')}
+                speechBubble="mostを使うんだね。"
+                topContent={<>× popularest</>}
+                bottomContent={<>◎ most popular</>}
             />
         ),
         pauseAfter: 15,
@@ -135,8 +135,8 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<> </>}
-                speechBubble="ポイント!"
+                imageSrc={staticFile('images/quiz_intro.png')}
+                englishText={<><RedText>Point!</RedText> most popular</>}
             />
         ),
         pauseAfter: 15,
@@ -149,8 +149,9 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<>一番 <RedText>⇒</RedText></>}
-                speechBubble="ポイント!"
+                imageSrc={staticFile('images/quiz_intro.png')}
+                japaneseText={<>一番 = No.1</>}
+                englishText={<><RedText>Point!</RedText> most popular</>}
             />
         ),
         pauseAfter: 15,
@@ -163,8 +164,9 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<>一番 <RedText>⇒</RedText></>}
-                speechBubble="ポイント!"
+                imageSrc={staticFile('images/quiz_intro.png')}
+                japaneseText={<>一番 = No.1</>}
+                englishText={<><RedText>Point!</RedText> most popular</>}
             />
         ),
         pauseAfter: 15,
@@ -177,7 +179,9 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<>一番 <RedText>⇒</RedText> １つに決まる</>}
+                imageSrc={staticFile('images/quiz_intro.png')}
+                japaneseText={<>一番 = No.1一つに決まる！</>}
+                englishText={<><RedText>Point!</RedText> most popular ↓</>}
             />
         ),
         pauseAfter: 15,
@@ -190,7 +194,8 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<>一番 <RedText>⇒</RedText> １つに決まる</>}
+                imageSrc={staticFile('images/quiz_intro.png')}
+                japaneseText={<>(維持)</>}
             />
         ),
         pauseAfter: 15,
@@ -203,8 +208,9 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                japaneseText={<>一番 <RedText>⇒</RedText> １つに決まる</>}
-                englishText={<><RedText>the</RedText> most popular</>}
+                imageSrc={staticFile('images/quiz_intro.png')}
+                japaneseText={<>特定する = <RedText>the</RedText></>}
+                englishText={<><RedText>Point!</RedText> most popular</>}
             />
         ),
         pauseAfter: 15,
@@ -217,9 +223,9 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
+                imageSrc={staticFile('images/quiz_intro.png')}
                 speechBubble="theを忘れないで！"
-                japaneseText={<>一番 <RedText>⇒</RedText> １つに決まる</>}
-                englishText={<><RedText>the</RedText> most popular</>}
+                englishText={<><RedText>Point!</RedText> <RedText>the</RedText> most popular</>}
             />
         ),
         pauseAfter: 15,
@@ -232,9 +238,9 @@ export const englishLessonData: Scene[] = [
             <EnglishLessonBoard
                 step="title"
                 layout="standard"
-                speechBubble=""
-                japaneseText={<>一番 <RedText>⇒</RedText> １つに決まる</>}
-                englishText={<><RedText>the most</RedText> popular</>}
+                imageSrc={staticFile('images/quiz_intro.png')}
+                speechBubble="セットで覚えよう！"
+                japaneseText={<>(維持)</>}
             />
         ),
         pauseAfter: 15,
@@ -249,6 +255,7 @@ export const englishLessonData: Scene[] = [
                 layout="standard"
                 imageSrc={staticFile('images/quiz_intro.png')}
                 japaneseText={<>この映画は日本で一番人気があります。</>}
+                englishText={<>This movie is ( the ) ( most ) ( popular ) in Japan.</>}
             />
         ),
         pauseAfter: 15,
@@ -262,7 +269,7 @@ export const englishLessonData: Scene[] = [
                 step="title"
                 layout="standard"
                 imageSrc={staticFile('images/quiz_intro.png')}
-                speechBubble=""
+                speechBubble="正解！"
                 japaneseText={<>この映画は日本で一番人気があります。</>}
                 englishText={<>This movie is <RedText>the most popular</RedText> in Japan.</>}
             />

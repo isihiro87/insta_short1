@@ -68,6 +68,25 @@ export const CrossedText: React.FC<{ children: React.ReactNode }> = ({ children 
     </span>
 );
 
+export const RedCross: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <span style={{ position: 'relative', display: 'inline-block' }}>
+        {children}
+        <span style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            color: 'red',
+            fontSize: '3em',
+            fontWeight: '900',
+            pointerEvents: 'none',
+            opacity: 0.9
+        }}>
+            ×
+        </span>
+    </span>
+);
+
 // New Components for Refactoring (using relative units)
 export const LessonLabel: React.FC<{ children: React.ReactNode; color?: string }> = ({ children, color = '#555' }) => (
     <div style={{ fontSize: '0.6em', color, marginBottom: '0.2em' }}>{children}</div>
