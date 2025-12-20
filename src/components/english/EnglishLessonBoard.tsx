@@ -49,7 +49,8 @@ interface EnglishLessonBoardProps {
     timelineEvents?: { label: string; text: string }[];
     dialogueLines?: { speaker: string; text: string; side: 'left' | 'right'; iconSrc?: string }[];
     themeText?: string | React.ReactNode;
-    textLines?: { text: string; isEnglish?: boolean }[];
+    textLines?: { text: string | React.ReactNode; isEnglish?: boolean }[];
+    swapTextOrder?: boolean;
     minFontSize?: number;
 }
 
@@ -88,12 +89,12 @@ const FONT_SIZES = {
 };
 
 // Helper to get common text style
-const getTextStyle = (fontSize: number): React.CSSProperties => {
+const getTextStyle = (fontSize: number, lineHeight: string = '1.3'): React.CSSProperties => {
     return {
         fontSize: `${fontSize}px`,
         whiteSpace: 'pre-wrap', // Always wrap
         wordBreak: 'break-word',
-        lineHeight: '1.3',
+        lineHeight: lineHeight,
     };
 };
 
@@ -137,6 +138,7 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
     dialogueLines,
     themeText,
     textLines,
+    swapTextOrder = false,
 }) => {
     const frame = useCurrentFrame();
 
@@ -736,29 +738,61 @@ export const EnglishLessonBoard: React.FC<EnglishLessonBoardProps> = ({
                                     </div>
                                 ) : (
                                     <>
-                                        {japaneseText && (
-                                            <div style={{
-                                                color: '#333',
-                                                fontWeight: 'bold',
-                                                width: '100%',
-                                                textAlign: 'center',
-                                                ...getTextStyle(FONT_SIZES.JAPANESE_TEXT),
-                                            }}>
-                                                {japaneseText}
-                                            </div>
-                                        )}
-                                        {englishText && (
-                                            <div style={{
-                                                fontWeight: 'bold',
-                                                fontFamily: 'Roboto, sans-serif',
-                                                color: '#333',
-                                                width: '100%',
-                                                textAlign: 'center',
-                                                marginTop: '15px',
-                                                ...getTextStyle(FONT_SIZES.ENGLISH_TEXT),
-                                            }}>
-                                                {englishText}
-                                            </div>
+                                        {swapTextOrder ? (
+                                            <>
+                                                {englishText && (
+                                                    <div style={{
+                                                        fontWeight: 'bold',
+                                                        fontFamily: 'Roboto, sans-serif',
+                                                        color: '#333',
+                                                        width: '100%',
+                                                        textAlign: 'center',
+                                                        marginTop: '15px',
+                                                        ...getTextStyle(FONT_SIZES.ENGLISH_TEXT, '1.7'),
+                                                    }}>
+                                                        {englishText}
+                                                    </div>
+                                                )}
+                                                {japaneseText && (
+                                                    <div style={{
+                                                        color: '#333',
+                                                        fontWeight: 'bold',
+                                                        width: '100%',
+                                                        textAlign: 'center',
+                                                        marginTop: '15px',
+                                                        ...getTextStyle(FONT_SIZES.JAPANESE_TEXT, '1.7'),
+                                                    }}>
+                                                        {japaneseText}
+                                                    </div>
+                                                )}
+                                            </>
+                                        ) : (
+                                            <>
+                                                {japaneseText && (
+                                                    <div style={{
+                                                        color: '#333',
+                                                        fontWeight: 'bold',
+                                                        width: '100%',
+                                                        textAlign: 'center',
+                                                        ...getTextStyle(FONT_SIZES.JAPANESE_TEXT, '1.7'),
+                                                    }}>
+                                                        {japaneseText}
+                                                    </div>
+                                                )}
+                                                {englishText && (
+                                                    <div style={{
+                                                        fontWeight: 'bold',
+                                                        fontFamily: 'Roboto, sans-serif',
+                                                        color: '#333',
+                                                        width: '100%',
+                                                        textAlign: 'center',
+                                                        marginTop: '15px',
+                                                        ...getTextStyle(FONT_SIZES.ENGLISH_TEXT, '1.7'),
+                                                    }}>
+                                                        {englishText}
+                                                    </div>
+                                                )}
+                                            </>
                                         )}
                                     </>
                                 )}

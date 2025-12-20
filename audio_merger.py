@@ -1,3 +1,10 @@
+
+# 使い方:
+# python audio_merger.py <base_file.wav> <append_file1.wav> [append_file2.wav ...]
+#
+# 例:
+# python audio_merger.py 05_better_part004_part002.wav 05_better_part004_part003.wav
+
 import wave
 import os
 import sys
@@ -5,7 +12,7 @@ import sys
 def merge_audio_files(files):
     if len(files) < 2:
         print("エラー: マージするには少なくとも2つのファイルが必要です。")
-        print("使用法: python audio_merger.py 04_most_part0.wav 04_most_part0.wav")
+        print("使用法: python audio_merger.py 05_better_part0.wav 05_better_part0.wav")
         return
 
     output_path = files[0]

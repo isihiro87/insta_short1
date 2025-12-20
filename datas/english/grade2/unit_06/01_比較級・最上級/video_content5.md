@@ -10,19 +10,24 @@ I (　) summer (　) than winter.
 **【パターンB：型（ルール）重視】**
 問題！
 カッコに入る単語は何だろう？
-英語の文を作るときは、まず「型」を覚えておこう。
+
+今回はまず「型」を覚えておこう。
 
 「～のほうが好き」は、
-like ～ better than ... の型を使うよ。
-これは「CよりBの方が好き」っていう決まり文句なんだ。
+「like ～ better than ...」の型を使うよ。
+like ～ better than ...
+like ～ better than ...
+何度も繰り返して覚えよう。
 
-**(背景と範囲)**
-なんで better を使うかっていうと、これは well（よく）の比較級だからなんだ。
-「冬よりも、夏のことを、より良く思っている」＝「夏の方が好き」ってことだね。
-good（良い）の比較級も better だよ。
+ちなみに、なんで better を使うかっていうと、
+10これは「よく」という意味のwellの比較級だからなんだ。
+「like summer better than winter」をそのまま訳すと、
+「夏を冬より良く好む」となるんだ。
+つまり「夏の方が好き」ってことだね。
+goodの比較級も better だよ。
 この better は超重要だから絶対覚えてね！
 
-like ～ better than ...に当てはめると、
+「like ～ better than ...」の型を使うと、
 「私は冬より夏のほうが好きです」は
 "I like summer better than winter." になるんだ。
 

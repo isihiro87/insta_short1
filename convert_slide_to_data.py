@@ -1,3 +1,10 @@
+
+# 使い方:
+# python convert_slide_to_data.py --input_file [入力ファイルパス] --output_dir [出力ディレクトリ] --topic [トピック名] --output_file [出力ファイル名] --audio_base [音声ファイルのベースパス]
+#
+# 例:
+# python convert_slide_to_data.py --input_file "datas/english/grade2/unit_06/01_*/slide_content5.md" --output_dir "src" --topic "比較級・最上級" --output_file "EnglishLessonData.tsx" --audio_base "audio/grade2/unit06/01/content5"
+
 import os
 import re
 import glob
@@ -249,7 +256,13 @@ def main():
     
     slide_files = []
     if input_file:
-        slide_files = [input_file]
+        if '*' in input_file or '?' in input_file:
+             slide_files = glob.glob(input_file)
+             if not slide_files:
+                 print(f"No files found matching pattern: {input_file}")
+                 return
+        else:
+            slide_files = [input_file]
     elif base_dir:
         slide_files = glob.glob(os.path.join(base_dir, "slide_content*.md"))
     else:

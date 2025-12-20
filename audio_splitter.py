@@ -122,10 +122,10 @@ def split_audio_by_silence_wave(file_path, min_silence_len=0.3, silence_thresh_d
         traceback.print_exc()
 
 if __name__ == "__main__":
-    target_file = "04_most_part014.wav" 
+    target_file = "05_better_part004.wav" 
     
     if os.path.exists(target_file):
         # 0.3秒の無音で分割、フォルダに出力
-        split_audio_by_silence_wave(target_file, min_silence_len=0.2, silence_thresh_db=-40)
+        split_audio_by_silence_wave(target_file, min_silence_len=0.3, silence_thresh_db=-40)
     else:
         print(f"ファイル '{target_file}' が見つかりません。パスを確認してください。")

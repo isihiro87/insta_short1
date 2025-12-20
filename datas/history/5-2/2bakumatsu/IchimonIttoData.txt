@@ -1,0 +1,77 @@
+// import { SubjectTheme } from './components/rhythm/IchimonIttoBoard';
+
+export interface IchimonIttoScene {
+    id: string;
+    question: string;
+    answer: string;
+    description?: string; // Optional explanation
+    questionAudio: string;
+    questionDuration: number;
+    answerAudio: string;
+    answerDuration: number;
+}
+
+export interface TitleScene {
+    title: string;
+    audio: string;
+    duration: number;
+}
+
+export const titleData: TitleScene = {
+    title: '中2歴史　江戸幕末',
+    audio: 'audio/explain/00-bakumatsu.wav',
+    duration: 63, // 2.07s
+};
+
+export const ichimonIttoData: IchimonIttoScene[] = [
+    {
+        id: 'q1',
+        question: '旧幕府軍と新政府軍の\n間で行われた戦争は？',
+        answer: '戊辰戦争',
+        description: '',
+        questionAudio: 'audio/explain/01-bakumatsu.wav',
+        questionDuration: 112, // 3.71s
+        answerAudio: 'audio/explain/02-bakumatsu.wav',
+        answerDuration: 42, // 1.39s
+    },
+    {
+        id: 'q2',
+        question: '政権を朝廷に返した\n１５代将軍は誰か？',
+        answer: '徳川慶喜',
+        description: '',
+        questionAudio: 'audio/explain/03-bakumatsu.wav',
+        questionDuration: 106, // 3.52s
+        answerAudio: 'audio/explain/04-bakumatsu.wav',
+        answerDuration: 46, // 1.52s
+    },
+    {
+        id: 'q3',
+        question: '徳川慶喜が政権を\n朝廷に返した出来事は？',
+        answer: '大政奉還',
+        description: '',
+        questionAudio: 'audio/explain/05-bakumatsu.wav',
+        questionDuration: 104, // 3.43s
+        answerAudio: 'audio/explain/06-bakumatsu.wav',
+        answerDuration: 42, // 1.39s
+    },
+    {
+        id: 'q4',
+        question: '１８６６年、龍馬の\n仲介で成立した盟約は？',
+        answer: '薩長同盟',
+        description: '',
+        questionAudio: 'audio/explain/07-bakumatsu.wav',
+        questionDuration: 123, // 4.08s
+        answerAudio: 'audio/explain/08-bakumatsu.wav',
+        answerDuration: 45, // 1.49s
+    },
+    {
+        id: 'q5',
+        question: '江戸末期、民衆の間で\n流行した踊りは？',
+        answer: 'ええじゃないか',
+        description: '',
+        questionAudio: 'audio/explain/09-bakumatsu.wav',
+        questionDuration: 84, // 2.80s
+        answerAudio: 'audio/explain/10-bakumatsu.wav',
+        answerDuration: 37, // 1.21s
+    },
+];

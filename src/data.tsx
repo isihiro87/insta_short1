@@ -8,7 +8,7 @@ export type Scene = {
   id: string;
   durationInFrames: number;
   audioSrc: string;
-  boardContent: () => React.ReactElement;
+  boardContent: () => React.ReactNode;
   overlayText?: string;
   characterComment?: string;
   characterCommentColor?: string;
@@ -20,6 +20,10 @@ export type Scene = {
   role?: 'maintitle' | 'subtitle' | 'answer' | 'explanation' | 'transition' | 'question' | 'rhythm';
   roleGroup?: string;
   pauseAfter?: number;
+  // Common Lesson Props
+  theme?: 'social' | 'science' | 'history';
+  title1?: string;
+  title2?: string;
 };
 
 export const GLOBAL_TITLE = '二等辺三角形の性質';
