@@ -1,0 +1,383 @@
+import { staticFile } from 'remotion';
+import React from 'react';
+import { CommonLessonBoard } from './components/common/CommonLessonBoard';
+import { HeroProfileLayout } from './components/common/HistoryLayouts';
+
+export interface CommonScene {
+    id: string;
+    durationInFrames: number;
+    audioSrc: string;
+    boardContent: () => React.ReactNode;
+    role: 'explanation' | 'answer' | 'question' | 'transition';
+}
+
+export const commonLessonData: CommonScene[] = [
+    // 1. Intro
+    {
+        id: 'line-01',
+        durationInFrames: 122,
+        audioSrc: staticFile('audio/explain/00-keimo.wav'),
+        boardContent: () => (
+            <CommonLessonBoard
+                imageSize="medium"
+                topLabel="啓蒙思想"
+                imageSrc={staticFile('images/king.png')}
+                text={<>「王様の言うことは絶対！」<br />　</>}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-02',
+        durationInFrames: 189,
+        audioSrc: staticFile('audio/explain/01-keimo.wav'),
+        boardContent: () => (
+            <CommonLessonBoard
+                imageSize="medium"
+                topLabel="啓蒙思想"
+                imageSrc={staticFile('images/king.png')}
+                text={<>「王様の言うことは絶対！」<br /><span style={{ color: '#E65100' }}>「人間らしく考えようぜ！」</span></>}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-03',
+        durationInFrames: 64,
+        audioSrc: staticFile('audio/explain/02-keimo.wav'),
+        boardContent: () => (
+            <CommonLessonBoard
+                imageSize="medium"
+                topLabel="啓蒙思想"
+                imageSrc={staticFile('images/king.png')}
+                text={<>「王様の言うことは絶対！」<br /><span style={{ color: '#E65100' }}>「人間らしく考えようぜ！」</span></>}
+                speechBubble="啓蒙思想"
+            />
+        ),
+        role: 'explanation',
+    },
+
+    // 2. Locke
+    {
+        id: 'line-05',
+        durationInFrames: 64,
+        audioSrc: staticFile('audio/explain/03-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="ロック"
+                description="イギリスの哲学者"
+                imageSrc={staticFile('images/locke.png')}
+                achievements={[]}
+                reserveCatchphraseSpace={true}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-06',
+        durationInFrames: 52,
+        audioSrc: staticFile('audio/explain/04-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="ロック"
+                description="イギリスの哲学者"
+                imageSrc={staticFile('images/locke.png')}
+                achievements={[]}
+                reserveCatchphraseSpace={true}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-07',
+        durationInFrames: 144,
+        audioSrc: staticFile('audio/explain/05-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="ロック"
+                description="イギリスの哲学者"
+                imageSrc={staticFile('images/locke.png')}
+                achievements={[]}
+                catchphrase="政府がダメなら取り替えちゃえ！"
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-08',
+        durationInFrames: 156,
+        audioSrc: staticFile('audio/explain/06-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="ロック"
+                description="イギリスの哲学者"
+                imageSrc={staticFile('images/resistance.png')}
+                achievements={['抵抗権（革命権）']}
+                catchphrase="政府がダメなら取り替えちゃえ！"
+                speechBubble="アメリカ独立に影響"
+            />
+        ),
+        role: 'explanation',
+    },
+
+    // 3. Montesquieu
+    {
+        id: 'line-10',
+        durationInFrames: 77,
+        audioSrc: staticFile('audio/explain/07-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="モンテスキュー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/montesquieu.png')}
+                achievements={[]}
+                reserveCatchphraseSpace={true}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-11',
+        durationInFrames: 101,
+        audioSrc: staticFile('audio/explain/08-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="モンテスキュー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/montesquieu.png')}
+                achievements={[]}
+                catchphrase="権力が一人に集まると暴走するから…"
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-12',
+        durationInFrames: 66,
+        audioSrc: staticFile('audio/explain/09-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="モンテスキュー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/separation_of_powers.png')}
+                achievements={[]}
+                catchphrase="権力は３つに分けようぜ！"
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-13',
+        durationInFrames: 70,
+        audioSrc: staticFile('audio/explain/10-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="モンテスキュー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/separation_of_powers.png')}
+                achievements={[]}
+                catchphrase="権力は３つに分けようぜ！"
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-14',
+        durationInFrames: 134,
+        audioSrc: staticFile('audio/explain/11-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="モンテスキュー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/separation_of_powers.png')}
+                achievements={['立法・行政・司法']}
+                catchphrase="権力は３つに分けようぜ！"
+                speechBubble="三権分立"
+            />
+        ),
+        role: 'explanation',
+    },
+
+    // 4. Rousseau
+    {
+        id: 'line-16',
+        durationInFrames: 70,
+        audioSrc: staticFile('audio/explain/12-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="ルソー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/rousseau.png')}
+                achievements={[]}
+                reserveCatchphraseSpace={true}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-17',
+        durationInFrames: 78,
+        audioSrc: staticFile('audio/explain/13-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="ルソー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/rousseau.png')}
+                achievements={[]}
+                catchphrase="国の政治を決める権利は…"
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-18',
+        durationInFrames: 78,
+        audioSrc: staticFile('audio/explain/14-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="ルソー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/rousseau.png')}
+                achievements={[]}
+                catchphrase="王様じゃなくて国民にある！"
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-19',
+        durationInFrames: 91,
+        audioSrc: staticFile('audio/explain/15-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="ルソー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/rousseau.png')}
+                achievements={['国民主権']}
+                catchphrase="王様じゃなくて国民にある！"
+                speechBubble="民主主義の土台"
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-20',
+        durationInFrames: 71,
+        audioSrc: staticFile('audio/explain/16-keimo.wav'),
+        boardContent: () => (
+            <HeroProfileLayout
+                name="ルソー"
+                description="フランスの哲学者"
+                imageSrc={staticFile('images/rousseau.png')}
+                achievements={['国民主権']}
+                catchphrase="王様じゃなくて国民にある！"
+                speechBubble="民主主義の土台"
+            />
+        ),
+        role: 'explanation',
+    },
+
+    // 5. Summary
+    {
+        id: 'line-22',
+        durationInFrames: 61,
+        audioSrc: staticFile('audio/explain/17-keimo.wav'),
+        boardContent: () => (
+            <CommonLessonBoard
+                imageSize="medium"
+                topLabel="まとめ：３人の偉人"
+                imageSrc={staticFile('images/liberty.png')}
+                text={<>
+                    <div style={{ textAlign: 'left', display: 'inline-block' }}>
+                        ① ロック ⇒ <span style={{ color: '#E65100' }}>抵抗権　</span><br />
+                        <br />
+                        <br />
+                    </div>
+                </>}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-23',
+        durationInFrames: 78,
+        audioSrc: staticFile('audio/explain/18-keimo.wav'),
+        boardContent: () => (
+            <CommonLessonBoard
+                imageSize="medium"
+                topLabel="まとめ：３人の偉人"
+                imageSrc={staticFile('images/liberty.png')}
+                text={<>
+                    <div style={{ textAlign: 'left', display: 'inline-block' }}>
+                        ① ロック ⇒ <span style={{ color: '#E65100' }}>抵抗権</span><br />
+                        ② モンテ ⇒ <span style={{ color: '#E65100' }}>三権分立</span><br />
+                        <br />
+                    </div>
+                </>}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-24',
+        durationInFrames: 66,
+        audioSrc: staticFile('audio/explain/19-keimo.wav'),
+        boardContent: () => (
+            <CommonLessonBoard
+                imageSize="medium"
+                topLabel="まとめ：３人の偉人"
+                imageSrc={staticFile('images/liberty.png')}
+                text={<>
+                    <div style={{ textAlign: 'left', display: 'inline-block' }}>
+                        ① ロック ⇒ <span style={{ color: '#E65100' }}>抵抗権</span><br />
+                        ② モンテ ⇒ <span style={{ color: '#E65100' }}>三権分立</span><br />
+                        ③ ルソー ⇒ <span style={{ color: '#E65100' }}>国民主権</span>
+                    </div>
+                </>}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-25',
+        durationInFrames: 130,
+        audioSrc: staticFile('audio/explain/20-keimo.wav'),
+        boardContent: () => (
+            <CommonLessonBoard
+                imageSize="medium"
+                topLabel="まとめ：３人の偉人"
+                imageSrc={staticFile('images/liberty.png')}
+                text={<>
+                    <div style={{ textAlign: 'left', display: 'inline-block' }}>
+                        ① ロック ⇒ <span style={{ color: '#E65100' }}>抵抗権</span><br />
+                        ② モンテ ⇒ <span style={{ color: '#E65100' }}>三権分立</span><br />
+                        ③ ルソー ⇒ <span style={{ color: '#E65100' }}>国民主権</span>
+                    </div>
+                </>}
+                speechBubble={<>「自由な社会」<br />の土台！</>}
+            />
+        ),
+        role: 'explanation',
+    },
+    {
+        id: 'line-26',
+        durationInFrames: 105,
+        audioSrc: staticFile('audio/explain/21-keimo.wav'),
+        boardContent: () => (
+            <CommonLessonBoard
+                imageSize="medium"
+                topLabel="まとめ：３人の偉人"
+                imageSrc={staticFile('images/liberty.png')}
+                text={<>
+                    <div style={{ textAlign: 'left', display: 'inline-block' }}>
+                        ① ロック ⇒ <span style={{ color: '#E65100' }}>抵抗権</span><br />
+                        ② モンテ ⇒ <span style={{ color: '#E65100' }}>三権分立</span><br />
+                        ③ ルソー ⇒ <span style={{ color: '#E65100' }}>国民主権</span>
+                    </div>
+                </>}
+                speechBubble="テストに出るよ！"
+            />
+        ),
+        role: 'explanation',
+    },
+];
