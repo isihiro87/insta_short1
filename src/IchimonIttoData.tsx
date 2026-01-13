@@ -1,97 +1,77 @@
-// import { SubjectTheme } from './components/rhythm/IchimonIttoBoard';
+// 保存用ファイル - 06-qas.md
+// フォルダ: datas/history/4-1/6momoyama_culture
+// 生成日: 2026-01-09
 
 export interface IchimonIttoScene {
     id: string;
     question: string;
     answer: string;
-    description?: string; // Optional explanation
+    description?: string;
     questionAudio: string;
     questionDuration: number;
     answerAudio: string;
     answerDuration: number;
 }
 
-export interface TitleScene {
-    title: string;
-    audio: string;
-    duration: number;
-}
-
-export const titleData: TitleScene = {
-    title: '中2歴史\n明治時代の国境',
-    audio: 'audio/explain/00-meijiishin2_title.wav',
-    duration: 90, // Approx 3s
-};
-
 export const ichimonIttoData: IchimonIttoScene[] = [
     {
         id: 'q1',
-        question: '1869年に蝦夷地から\n改称された地名は？',
-        answer: '北海道',
-        description: '開拓使が置かれ、\n開発が進められた。',
-        questionAudio: 'audio/explain/00-kokkyou.wav',
-        questionDuration: 172, // 5.714s
-        answerAudio: 'audio/explain/01-kokkyou.wav',
-        answerDuration: 36, // 1.173s
+        question: '信長・秀吉の時代に\n花開いた豪壮な文化は？',
+        answer: '桃山文化',
+        description: '全国統一を進めた権力者や豪商の力を背景に生まれた、力強く華やかな文化。',
+        questionAudio: 'audio/explain/00-6momoyama_culture.wav',
+        questionDuration: 114,
+        answerAudio: 'audio/explain/01-6momoyama_culture.wav',
+        answerDuration: 41,
     },
     {
         id: 'q2',
-        question: '北海道の開拓と北方の\n警備を担った兵士は？',
-        answer: '屯田兵',
-        description: '農業をしながら\n訓練を受けた人々。',
-        questionAudio: 'audio/explain/02-kokkyou.wav',
-        questionDuration: 105, // 3.498s
-        answerAudio: 'audio/explain/03-kokkyou.wav',
-        answerDuration: 36, // 1.189s
+        question: '秀吉に仕え、質素な\n「わび茶」を完成させた人物は？',
+        answer: '千利休',
+        description: '堺の商人で、茶の湯を精神修養の場として芸術的に高めた。',
+        questionAudio: 'audio/explain/02-6momoyama_culture.wav',
+        questionDuration: 130,
+        answerAudio: 'audio/explain/03-6momoyama_culture.wav',
+        answerDuration: 40,
     },
     {
         id: 'q3',
-        question: '1875年にロシアと\n結んだ領土の条約は？',
-        answer: '樺太・千島交換条約',
-        description: '千島を日本領、\n樺太をロシア領とした。',
-        questionAudio: 'audio/explain/04-kokkyou.wav',
-        questionDuration: 114, // 3.789s
-        answerAudio: 'audio/explain/05-kokkyou.wav',
-        answerDuration: 77, // 2.549s
+        question: '安土桃山時代にヨーロッパから伝わった文化は？',
+        answer: '南蛮文化',
+        description: 'パンや時計、活版印刷などの実用的な技術も多く伝わった。',
+        questionAudio: 'audio/explain/04-6momoyama_culture.wav',
+        questionDuration: 94,
+        answerAudio: 'audio/explain/05-6momoyama_culture.wav',
+        answerDuration: 40,
     },
     {
         id: 'q4',
-        question: '1876年に領有が確定した\n太平洋の島々は？',
-        answer: '小笠原諸島',
-        description: '政府が領有を宣言し\n欧米に通告した。',
-        questionAudio: 'audio/explain/06-kokkyou.wav',
-        questionDuration: 131, // 4.354s
-        answerAudio: 'audio/explain/07-kokkyou.wav',
-        answerDuration: 42, // 1.394s
+        question: '狩野永徳が描いた、\n力強い唐獅子が特徴の障壁画は？',
+        answer: '唐獅子図屏風',
+        description: '金箔や鮮やかな色彩を使い、支配者の威信を象徴する代表作。',
+        questionAudio: 'audio/explain/06-6momoyama_culture.wav',
+        questionDuration: 136,
+        answerAudio: 'audio/explain/07-6momoyama_culture.wav',
+        answerDuration: 48,
     },
     {
         id: 'q5',
-        question: '1879年に琉球藩を\n廃止して置かれた県は？',
-        answer: '沖縄県',
-        description: 'これに抗議する清と\n対立が生じた。',
-        questionAudio: 'audio/explain/08-kokkyou.wav',
-        questionDuration: 122, // 4.058s
-        answerAudio: 'audio/explain/09-kokkyou.wav',
-        answerDuration: 34, // 1.104s
+        question: '白壁が美しく「白鷺城」\nとも呼ばれる兵庫県の城は？',
+        answer: '姫路城',
+        description: '5層の大天守を持ち、桃山文化の影響を受けた壮麗な城。',
+        questionAudio: 'audio/explain/08-6momoyama_culture.wav',
+        questionDuration: 140,
+        answerAudio: 'audio/explain/09-6momoyama_culture.wav',
+        answerDuration: 36,
     },
     {
         id: 'q6',
-        question: '琉球を日本領に組み込んだ\n一連の過程は？',
-        answer: '琉球処分',
-        description: '軍隊の力を背景に\n沖縄県を設置した。',
-        questionAudio: 'audio/explain/10-kokkyou.wav',
-        questionDuration: 91, // 3.024s
-        answerAudio: 'audio/explain/11-kokkyou.wav',
-        answerDuration: 40, // 1.333s
-    },
-    {
-        id: 'q7',
-        question: '歯舞・色丹・国後・\n択捉の4島の総称は？',
-        answer: '北方領土',
-        description: '日本固有の領土だが\nロシアが不法占拠。',
-        questionAudio: 'audio/explain/12-kokkyou.wav',
-        questionDuration: 139, // 4.602s
-        answerAudio: 'audio/explain/13-kokkyou.wav',
-        answerDuration: 40, // 1.333s
+        question: '三味線に合わせて語り、\n人々の人気を集めた芸能は？',
+        answer: '浄瑠璃',
+        description: '恋愛や物語を主題とし、平和を謳歌する民衆の間で流行した。',
+        questionAudio: 'audio/explain/10-6momoyama_culture.wav',
+        questionDuration: 125,
+        answerAudio: 'audio/explain/11-6momoyama_culture.wav',
+        answerDuration: 32,
     },
 ];

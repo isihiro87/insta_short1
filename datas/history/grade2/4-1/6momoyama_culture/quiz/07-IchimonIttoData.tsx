@@ -16,7 +16,7 @@ export interface IchimonIttoScene {
 export const ichimonIttoData: IchimonIttoScene[] = [
     {
         id: 'q1',
-        question: '京都で「かぶきおどり」を\n始め人気を博した女性は？',
+        question: '京都で「かぶきおどり」\nを始め人気を博した女性は？',
         answer: '出雲の阿国',
         description: '派手な衣装と斬新な踊りで、後の歌舞伎の源流を作った。',
         questionAudio: 'audio/explain/12-6momoyama_culture.wav',
@@ -76,7 +76,7 @@ export const ichimonIttoData: IchimonIttoScene[] = [
     },
     {
         id: 'q7',
-        question: '南蛮貿易により伝えられ、\n現代も親しまれている菓子は？',
+        question: '南蛮貿易により伝えられ\n現代も親しまれている菓子は？',
         answer: 'カステラ',
         description: '卵や砂糖を使い、欧州の食文化が日本に定着した一例。',
         questionAudio: 'audio/explain/24-6momoyama_culture.wav',

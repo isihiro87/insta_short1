@@ -19,10 +19,10 @@ interface IchimonIttoBoardProps {
 
 // Simple, clean color schemes
 export const themeColors: Record<SubjectTheme, { bg: string; accent: string; text: string }> = {
-    history: { bg: '#FFF8E1', accent: '#FF9800', text: '#333' },
-    science: { bg: '#E8F5E9', accent: '#4CAF50', text: '#333' },
-    english: { bg: '#E3F2FD', accent: '#2196F3', text: '#333' },
-    math: { bg: '#F3E5F5', accent: '#9C27B0', text: '#333' },
+    history: { bg: '#FFF8E1', accent: '#FF9800', text: '#333' }, // 社会: オレンジ系
+    science: { bg: '#E8F5E9', accent: '#4CAF50', text: '#333' }, // 理科: 緑系
+    english: { bg: '#FCE4EC', accent: '#E91E63', text: '#333' }, // 英語: ピンク系
+    math: { bg: '#E3F2FD', accent: '#2196F3', text: '#333' },    // 数学: 青系
 };
 
 export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
@@ -76,7 +76,7 @@ export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
                     height: 'auto',
                 }}>
                     <div style={{
-                        backgroundColor: '#FF9800', // Lighter Brown
+                        backgroundColor: theme.accent,
                         borderRadius: '20px',
                         padding: '15px 40px',
                         display: 'flex',
@@ -87,17 +87,17 @@ export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
                         <div style={{
                             fontSize: '90px',
                             fontWeight: 'bold',
-                            color: '#FFF8E1', // Custom color
+                            color: theme.bg,
                             whiteSpace: 'nowrap',
                             textAlign: 'center',
                             lineHeight: '1.2',
                         }}>
-                            中2　歴史
+                            {title || '中2　歴史'}
                         </div>
                         <div style={{
                             fontSize: '90px',
                             fontWeight: 'bold',
-                            color: '#FFF8E1', // Custom color
+                            color: theme.bg,
                             whiteSpace: 'nowrap',
                             textAlign: 'center',
                             lineHeight: '1.2',
@@ -232,8 +232,8 @@ export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
                 position: 'absolute',
                 bottom: '0',
                 right: '0',
-                width: '450px',
-                height: '450px',
+                width: '600px',
+                height: '600px',
                 zIndex: 10,
                 transform: 'translate(10%, 10%)',
                 display: 'flex',

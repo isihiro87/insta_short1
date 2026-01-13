@@ -16,11 +16,11 @@ export interface IchimonIttoScene {
 export const ichimonIttoData: IchimonIttoScene[] = [
     {
         id: 'q1',
-        question: '大名や豪商の富を\n背景とした豪華な文化の名称は？',
+        question: '信長・秀吉の時代に\n花開いた豪壮な文化は？',
         answer: '桃山文化',
         description: '全国統一を進めた権力者や豪商の力を背景に生まれた、力強く華やかな文化。',
         questionAudio: 'audio/explain/00-6momoyama_culture.wav',
-        questionDuration: 122,
+        questionDuration: 114,
         answerAudio: 'audio/explain/01-6momoyama_culture.wav',
         answerDuration: 41,
     },
@@ -36,11 +36,11 @@ export const ichimonIttoData: IchimonIttoScene[] = [
     },
     {
         id: 'q3',
-        question: '欧州の文化が日本の\n芸術や風俗に与えた影響は？',
+        question: '安土桃山時代にヨーロッパから伝わった文化は？',
         answer: '南蛮文化',
         description: 'パンや時計、活版印刷などの実用的な技術も多く伝わった。',
         questionAudio: 'audio/explain/04-6momoyama_culture.wav',
-        questionDuration: 114,
+        questionDuration: 94,
         answerAudio: 'audio/explain/05-6momoyama_culture.wav',
         answerDuration: 40,
     },

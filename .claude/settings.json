@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(steering)",
+      "Skill(create-quiz-content)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "hooks": {}
+}

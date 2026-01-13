@@ -75,7 +75,7 @@ export const RemotionRoot: React.FC = () => {
   const englishTotalFrames = calculateTotalFrames(englishLessonData);
   const commonTotalFrames = calculateCommonTotalFrames(commonLessonData);
   const ichimonIttoTotalFrames = ichimonIttoData.reduce((acc, scene) => {
-    return acc + scene.questionDuration + 50 + scene.answerDuration + 30; // 50=Countdown, 30=AnswerBuffer
+    return acc + scene.questionDuration + 45 + scene.answerDuration + 45; // 45=Countdown, 45=AnswerBuffer
   }, 0);
 
   return (
@@ -135,6 +135,7 @@ export const RemotionRoot: React.FC = () => {
         height={1920}
         defaultProps={{
           subject: 'history',
+          title: titleData,
         }}
       />
 

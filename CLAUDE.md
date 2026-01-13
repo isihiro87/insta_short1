@@ -34,12 +34,18 @@ npm run upgrade
 
 | コマンド | 説明 |
 |---------|------|
+| `/research-theme [テーマ]` | テーマを中学生向けにリサーチしてまとめる（脚本作成の事前準備） |
 | `/make-quiz [フォルダパス]` | クイズ動画を作成（準備→音声待ち→レンダリング→紹介文） |
+| `/review-story [storyフォルダパス]` | 脚本を添削し改善案を出す |
+| `/make-prompts [storyフォルダパス]` | 脚本から画像生成用プロンプトを作成（8種類のスタイルから選択） |
 | `/add-feature [機能名]` | 新機能を追加（ステアリングファイル作成→実装→検証） |
 
 **使用例**:
 ```bash
+/research-theme 桶狭間の戦い
 /make-quiz datas/history/4-1/3
+/review-story datas/history/grade2/4-1/4nobunaga_hideyoshi/story/6_honnoji
+/make-prompts datas/history/grade2/4-1/4nobunaga_hideyoshi/story/story1
 ```
 
 途中で音声ファイルの準備を依頼し、「OK」の入力を待ちます。
