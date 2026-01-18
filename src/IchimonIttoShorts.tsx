@@ -136,7 +136,7 @@ export const IchimonIttoShortsVideo: React.FC<{
 }) => {
         const COUNTDOWN_DURATION = 45; // Unified pause after question
         const ANSWER_BUFFER = 45; // Unified pause after answer
-        const END_CARD_DURATION = 90; // 3 seconds
+        const END_CARD_DURATION = 0; // エンドカード無効化
 
         return (
             <AbsoluteFill style={{ backgroundColor: 'white' }}>
@@ -145,8 +145,8 @@ export const IchimonIttoShortsVideo: React.FC<{
                 <Series>
                     {scenes.map((scene, index) => {
                         const isLast = index === scenes.length - 1;
-                        // Extend duration for the last scene ONLY
-                        const answerPhaseDuration = scene.answerDuration + ANSWER_BUFFER + (isLast ? END_CARD_DURATION : 0);
+                        // 最後のシーンはバッファなし（余白の白い時間を削除）
+                        const answerPhaseDuration = scene.answerDuration + (isLast ? 0 : ANSWER_BUFFER);
 
                         return (
                             <React.Fragment key={scene.id}>
@@ -169,7 +169,7 @@ export const IchimonIttoShortsVideo: React.FC<{
                                         subject={subject}
                                         index={index}
                                         total={scenes.length}
-                                        isLast={isLast}
+                                        isLast={false} // エンドカード無効化
                                         endCardDuration={END_CARD_DURATION}
                                         title={title}
                                     />

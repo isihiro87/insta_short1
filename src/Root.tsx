@@ -7,7 +7,7 @@ import { englishLessonData } from './EnglishLessonData';
 import { CommonShortsVideo } from './CommonShorts';
 import { commonLessonData, CommonScene } from './CommonLessonData';
 import { IchimonIttoShortsVideo } from './IchimonIttoShorts';
-import { ichimonIttoData, titleData } from './IchimonIttoData';
+import { ichimonIttoData, titleData, IchimonIttoScene } from './IchimonIttoData';
 import { TriviaVideo } from './TriviaVideo';
 import { RefactoredTriviaVideo } from './RefactoredTriviaVideo';
 import { industryRevScenario } from './scenarios/IndustryRev';
@@ -18,6 +18,15 @@ import './style.css';
 // Calculate duration for Industry Revolution video
 const industryRevTotalFrames = industryRevScenario.scenes.reduce((acc, scene) => acc + scene.durationInFrames, 0);
 const trivia3TotalFrames = trivia3Scenario.scenes.reduce((acc, scene) => acc + scene.durationInFrames, 0);
+
+// 一問一答の総フレーム数を計算（最後のシーンはバッファなし）
+const calculateIchimonIttoFrames = (scenes: IchimonIttoScene[]) => {
+  return scenes.reduce((acc, scene, index) => {
+    const isLast = index === scenes.length - 1;
+    const answerBuffer = isLast ? 0 : 45; // 最後のシーンはバッファなし
+    return acc + scene.questionDuration + 45 + scene.answerDuration + answerBuffer;
+  }, 0);
+};
 
 export const RemotionRoot: React.FC = () => {
   // シーンのdurationInFramesの合計に加えて、役割に応じた間も計算
@@ -74,9 +83,7 @@ export const RemotionRoot: React.FC = () => {
   const mathTotalFrames = calculateTotalFrames(mathLessonData);
   const englishTotalFrames = calculateTotalFrames(englishLessonData);
   const commonTotalFrames = calculateCommonTotalFrames(commonLessonData);
-  const ichimonIttoTotalFrames = ichimonIttoData.reduce((acc, scene) => {
-    return acc + scene.questionDuration + 45 + scene.answerDuration + 45; // 45=Countdown, 45=AnswerBuffer
-  }, 0);
+  const ichimonIttoTotalFrames = calculateIchimonIttoFrames(ichimonIttoData);
 
   return (
     <>
@@ -134,8 +141,15 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={{
+          scenes: ichimonIttoData,
           subject: 'history',
           title: titleData,
+        }}
+        calculateMetadata={({ props }) => {
+          // propsで渡されたscenesがあればそれを使用、なければデフォルト
+          const scenes = props.scenes || ichimonIttoData;
+          const duration = calculateIchimonIttoFrames(scenes);
+          return { durationInFrames: duration };
         }}
       />
 

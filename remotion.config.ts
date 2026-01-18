@@ -9,3 +9,6 @@ import { enableTailwind } from '@remotion/tailwind-v4';
 Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
 Config.overrideWebpackConfig(enableTailwind);
+Config.setChromiumOpenGlRenderer('swangle');
+Config.setChromiumDisableWebSecurity(true);
+Config.setBrowserExecutable('/workspaces/insta-short1/chrome-headless-shell/linux-143.0.7499.192/chrome-headless-shell-linux64/chrome-headless-shell');

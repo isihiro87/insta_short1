@@ -59,7 +59,7 @@ export const ichimonIttoData: IchimonIttoScene[] = [
     },
     {
         id: 'q5',
-        question: 'ロシア革命を妨害するため\n日本などが軍を送ったのは？',
+        question: 'ロシア革命妨害のため\n日本などが送った軍は？',
         answer: 'シベリア出兵',
         description: '社会主義の拡大を恐れた列強が、干渉戦争として軍を派遣した。',
         questionAudio: 'audio/explain/08-2russia_revolution.wav',

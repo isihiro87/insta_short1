@@ -1,6 +1,6 @@
 // 保存用ファイル - qas.md
-// フォルダ: datas/history/grade3/6-1/3versailles
-// 生成日: 2026-01-11
+// フォルダ: datas/history/grade3/6-1/3versailles/quiz
+// 生成日: 2026-01-16
 
 // タイトル情報（学年・教科）
 export const titleData = '中3　歴史';
@@ -19,11 +19,11 @@ export interface IchimonIttoScene {
 export const ichimonIttoData: IchimonIttoScene[] = [
     {
         id: 'q1',
-        question: '1919年に結ばれた\n大戦の講和条約は？',
+        question: '1919年に結ばれた\n第一次世界大戦の講和条約は？',
         answer: 'ベルサイユ条約',
         description: 'パリ講和会議で調印され、敗戦国ドイツに厳しい条件を課した条約。',
         questionAudio: 'audio/explain/00-3versailles.wav',
-        questionDuration: 111,
+        questionDuration: 138,
         answerAudio: 'audio/explain/01-3versailles.wav',
         answerDuration: 48,
     },

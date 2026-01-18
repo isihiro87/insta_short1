@@ -1,6 +1,9 @@
-// 保存用ファイル - 06-qas.md
-// フォルダ: datas/history/4-1/6momoyama_culture
-// 生成日: 2026-01-09
+// 保存用ファイル - qas.md
+// フォルダ: datas/history/grade3/6-1/3versailles/quiz
+// 生成日: 2026-01-16
+
+// タイトル情報（学年・教科）
+export const titleData = '中3　歴史';
 
 export interface IchimonIttoScene {
     id: string;
@@ -16,62 +19,52 @@ export interface IchimonIttoScene {
 export const ichimonIttoData: IchimonIttoScene[] = [
     {
         id: 'q1',
-        question: '信長・秀吉の時代に\n花開いた豪壮な文化は？',
-        answer: '桃山文化',
-        description: '全国統一を進めた権力者や豪商の力を背景に生まれた、力強く華やかな文化。',
-        questionAudio: 'audio/explain/00-6momoyama_culture.wav',
-        questionDuration: 114,
-        answerAudio: 'audio/explain/01-6momoyama_culture.wav',
-        answerDuration: 41,
-    },
-    {
-        id: 'q2',
-        question: '秀吉に仕え、質素な\n「わび茶」を完成させた人物は？',
-        answer: '千利休',
-        description: '堺の商人で、茶の湯を精神修養の場として芸術的に高めた。',
-        questionAudio: 'audio/explain/02-6momoyama_culture.wav',
-        questionDuration: 130,
-        answerAudio: 'audio/explain/03-6momoyama_culture.wav',
-        answerDuration: 40,
-    },
-    {
-        id: 'q3',
-        question: '安土桃山時代にヨーロッパから伝わった文化は？',
-        answer: '南蛮文化',
-        description: 'パンや時計、活版印刷などの実用的な技術も多く伝わった。',
-        questionAudio: 'audio/explain/04-6momoyama_culture.wav',
-        questionDuration: 94,
-        answerAudio: 'audio/explain/05-6momoyama_culture.wav',
-        answerDuration: 40,
-    },
-    {
-        id: 'q4',
-        question: '狩野永徳が描いた、\n力強い唐獅子が特徴の障壁画は？',
-        answer: '唐獅子図屏風',
-        description: '金箔や鮮やかな色彩を使い、支配者の威信を象徴する代表作。',
-        questionAudio: 'audio/explain/06-6momoyama_culture.wav',
-        questionDuration: 136,
-        answerAudio: 'audio/explain/07-6momoyama_culture.wav',
+        question: '1919年に結ばれた\n第一次世界大戦の講和条約は？',
+        answer: 'ベルサイユ条約',
+        description: 'パリ講和会議で調印され、敗戦国ドイツに厳しい条件を課した条約。',
+        questionAudio: 'audio/explain/00-3versailles.wav',
+        questionDuration: 138,
+        answerAudio: 'audio/explain/01-3versailles.wav',
         answerDuration: 48,
     },
     {
-        id: 'q5',
-        question: '白壁が美しく「白鷺城」\nとも呼ばれる兵庫県の城は？',
-        answer: '姫路城',
-        description: '5層の大天守を持ち、桃山文化の影響を受けた壮麗な城。',
-        questionAudio: 'audio/explain/08-6momoyama_culture.wav',
-        questionDuration: 140,
-        answerAudio: 'audio/explain/09-6momoyama_culture.wav',
-        answerDuration: 36,
+        id: 'q2',
+        question: 'ウィルソンの提案で\n設立された国際平和組織は？',
+        answer: '国際連盟',
+        description: '1920年に発足し、世界平和と国際協調を目的とした史上初の組織。',
+        questionAudio: 'audio/explain/02-3versailles.wav',
+        questionDuration: 100,
+        answerAudio: 'audio/explain/03-3versailles.wav',
+        answerDuration: 42,
     },
     {
-        id: 'q6',
-        question: '三味線に合わせて語り、\n人々の人気を集めた芸能は？',
-        answer: '浄瑠璃',
-        description: '恋愛や物語を主題とし、平和を謳歌する民衆の間で流行した。',
-        questionAudio: 'audio/explain/10-6momoyama_culture.wav',
-        questionDuration: 125,
-        answerAudio: 'audio/explain/11-6momoyama_culture.wav',
-        answerDuration: 32,
+        id: 'q3',
+        question: '各民族が自らの政治を\n決定すべきという原則は？',
+        answer: '民族自決',
+        description: 'ウィルソンが提唱し、東ヨーロッパ諸国の独立の根拠となった考え。',
+        questionAudio: 'audio/explain/04-3versailles.wav',
+        questionDuration: 114,
+        answerAudio: 'audio/explain/05-3versailles.wav',
+        answerDuration: 44,
+    },
+    {
+        id: 'q4',
+        question: '国際連盟の設立を\n提唱したアメリカ大統領は？',
+        answer: 'ウィルソン',
+        description: '「十四か条の平和原則」を発表し、戦後の国際秩序を示した。',
+        questionAudio: 'audio/explain/06-3versailles.wav',
+        questionDuration: 103,
+        answerAudio: 'audio/explain/07-3versailles.wav',
+        answerDuration: 30,
+    },
+    {
+        id: 'q5',
+        question: '国際連盟で事務次長を\n務めた日本人は？',
+        answer: '新渡戸稲造',
+        description: '「武士道」の著者としても知られ、国際平和のために尽力した。',
+        questionAudio: 'audio/explain/08-3versailles.wav',
+        questionDuration: 91,
+        answerAudio: 'audio/explain/09-3versailles.wav',
+        answerDuration: 42,
     },
 ];

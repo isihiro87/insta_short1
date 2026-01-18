@@ -32,23 +32,41 @@ npm run upgrade
 
 ## スラッシュコマンド
 
+### Quiz用（q-）
+
 | コマンド | 説明 |
 |---------|------|
-| `/research-theme [テーマ]` | テーマを中学生向けにリサーチしてまとめる（脚本作成の事前準備） |
-| `/make-quiz [フォルダパス]` | クイズ動画を作成（準備→音声待ち→レンダリング→紹介文） |
-| `/review-story [storyフォルダパス]` | 脚本を添削し改善案を出す |
-| `/make-prompts [storyフォルダパス]` | 脚本から画像生成用プロンプトを作成（8種類のスタイルから選択） |
+| `/q-make-quiz [quizフォルダ]` | クイズ動画作成ワークフロー（全体ガイド） |
+| `/q-review [quizフォルダ]` | qas.mdの問題チェック・レビュー |
+| `/q-prepare [quizフォルダ]` | qa.md生成、音声ファイルリスト作成 |
+| `/q-render [quizフォルダ]` | 動画レンダリング、紹介文生成 |
+
+### Story用（s-）
+
+| コマンド | 説明 |
+|---------|------|
+| `/s-research-theme [テーマ]` | テーマを中学生向けにリサーチ（脚本作成の事前準備） |
+| `/s-review-story [storyフォルダ]` | 脚本を添削し改善案を出す |
+| `/s-make-prompts [storyフォルダ]` | 脚本から画像生成用プロンプトを作成 |
+
+### 共通
+
+| コマンド | 説明 |
+|---------|------|
 | `/add-feature [機能名]` | 新機能を追加（ステアリングファイル作成→実装→検証） |
 
 **使用例**:
 ```bash
-/research-theme 桶狭間の戦い
-/make-quiz datas/history/4-1/3
-/review-story datas/history/grade2/4-1/4nobunaga_hideyoshi/story/6_honnoji
-/make-prompts datas/history/grade2/4-1/4nobunaga_hideyoshi/story/story1
-```
+# クイズ動画作成
+/q-prepare datas/history/grade2/4-1/3nanban_trade/quiz
+# → 音声ファイルを配置
+/q-render datas/history/grade2/4-1/3nanban_trade/quiz
 
-途中で音声ファイルの準備を依頼し、「OK」の入力を待ちます。
+# ストーリー作成
+/s-research-theme 桶狭間の戦い
+/s-review-story datas/history/grade2/4-1/4nobunaga_hideyoshi/story/6_honnoji
+/s-make-prompts datas/history/grade2/4-1/4nobunaga_hideyoshi/story/story1
+```
 
 ## スキル
 
@@ -225,20 +243,20 @@ datas/[教科]/[学年]/[章]/[番号][トピック名]/
 ### 作成フロー
 
 ```bash
-/make-quiz datas/history/4-1/3
+# 1. 問題チェック（任意）
+/q-review datas/history/grade2/4-1/3nanban_trade/quiz
+
+# 2. 音声準備
+/q-prepare datas/history/grade2/4-1/3nanban_trade/quiz
+# → qa.md生成、音声ファイルリスト表示
+# → 音声ファイルを audios/ に配置
+
+# 3. レンダリング
+/q-render datas/history/grade2/4-1/3nanban_trade/quiz
+# → IchimonIttoData.tsx生成、動画レンダリング、紹介文生成
 ```
 
-1. フォルダ名の確認・リネーム提案
-2. 全 *qas*.md ファイルを検出・一覧表示
-3. 各ファイルの qa.md を生成
-4. 音声ファイルリストを出力 **← ここで停止**
-5. 音声ファイルを audios/[ID]/ に配置
-6. 「OK」と入力
-7. 各ファイルについて:
-   - 音声長さを取得
-   - IchimonIttoData.tsx を生成
-   - 動画をレンダリング
-   - 紹介文を生成
+**各コマンドの詳細は `/q-make-quiz` で確認できます。**
 
 ### ファイル構造（複数qas.mdの場合）
 

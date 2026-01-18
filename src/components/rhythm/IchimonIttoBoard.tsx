@@ -191,7 +191,7 @@ export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
                     justifyContent: 'flex-start',
                     backgroundColor: 'white',
                     borderRadius: '16px',
-                    padding: '24px',
+                    padding: '24px 110px',
                     boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
                 }}>
                     <div style={{
