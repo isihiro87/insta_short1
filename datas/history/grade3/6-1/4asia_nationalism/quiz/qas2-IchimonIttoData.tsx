@@ -1,6 +1,6 @@
 // 保存用ファイル - qas2.md
 // フォルダ: datas/history/grade3/6-1/4asia_nationalism/quiz
-// 生成日: 2026-01-18
+// 生成日: 2026-01-19
 
 export interface IchimonIttoScene {
     id: string;
@@ -26,7 +26,7 @@ export const ichimonIttoData: IchimonIttoScene[] = [
     },
     {
         id: 'q2',
-        question: 'ガンディーが自立を\n訴えるため手紡ぎに使った道具は何？',
+        question: 'ガンディーが自立を訴えるため、手紡ぎに使った道具は何？',
         answer: '糸車',
         description: '自ら糸を紡ぐことで、伝統的なインド経済の自立を訴えた。',
         questionAudio: 'audio/explain/14-4asia_nationalism.wav',
@@ -36,7 +36,7 @@ export const ichimonIttoData: IchimonIttoScene[] = [
     },
     {
         id: 'q3',
-        question: '三・一独立運動を\n鎮圧した日本の組織は？',
+        question: '三・一独立運動を鎮圧\nした日本の組織は？',
         answer: '朝鮮総督府',
         description: '運動後に「文化政治」へと方針を転換したが、同化政策は続けた。',
         questionAudio: 'audio/explain/16-4asia_nationalism.wav',
@@ -48,7 +48,7 @@ export const ichimonIttoData: IchimonIttoScene[] = [
         id: 'q4',
         question: 'ワシントン会議で\n日本が返還した地域は？',
         answer: '山東省',
-        description: '二十一か条の要求で獲得したが、国際的批判を受けて返還した。',
+        description: '二十一か条の要求で山東省の権益を認めさせたが、ワシントン会議で返還した。',
         questionAudio: 'audio/explain/18-4asia_nationalism.wav',
         questionDuration: 91,
         answerAudio: 'audio/explain/19-4asia_nationalism.wav',
@@ -58,7 +58,7 @@ export const ichimonIttoData: IchimonIttoScene[] = [
         id: 'q5',
         question: '1921年に中国で結成され\n孫文と協力した政党は？',
         answer: '中国共産党',
-        description: '1921年に結成され、後に国民党と協力して反帝国主義を掲げた。',
+        description: '1921年に結成され、のちに国民党（孫文）と協力して反帝国主義を掲げた。',
         questionAudio: 'audio/explain/20-4asia_nationalism.wav',
         questionDuration: 152,
         answerAudio: 'audio/explain/21-4asia_nationalism.wav',
@@ -66,7 +66,7 @@ export const ichimonIttoData: IchimonIttoScene[] = [
     },
     {
         id: 'q6',
-        question: 'インド国民会議が\n掲げた抵抗運動の特色は？',
+        question: 'インド国民会議が掲げた\n抵抗運動の特色は？',
         answer: '非暴力・不服従',
         description: '暴力的な手段には訴えないが、支配には絶対に従わないという意思。',
         questionAudio: 'audio/explain/22-4asia_nationalism.wav',

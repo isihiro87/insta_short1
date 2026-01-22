@@ -15,6 +15,7 @@ interface IchimonIttoBoardProps {
     isTalking: boolean; // Controlled by parent
     timerProgress: number; // 0 to 1, controlled by parent
     title?: string;
+    subtitle?: string;
 }
 
 // Simple, clean color schemes
@@ -36,6 +37,7 @@ export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
     isTalking,
     timerProgress,
     title,
+    subtitle,
 }) => {
     const theme = themeColors[subject];
 
@@ -102,7 +104,7 @@ export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
                             textAlign: 'center',
                             lineHeight: '1.2',
                         }}>
-                            定期テスト対策
+                            {subtitle || '定期テスト対策'}
                         </div>
                     </div>
                 </div>

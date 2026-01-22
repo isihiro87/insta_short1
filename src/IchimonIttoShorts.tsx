@@ -12,7 +12,8 @@ const QuestionPhase: React.FC<{
     total: number;
     countdownDuration: number;
     title: string;
-}> = ({ scene, subject, index, total, countdownDuration, title }) => {
+    subtitle?: string;
+}> = ({ scene, subject, index, total, countdownDuration, title, subtitle }) => {
     const frame = useCurrentFrame();
     const isReading = frame < scene.questionDuration - 8;
 
@@ -39,6 +40,7 @@ const QuestionPhase: React.FC<{
                 isTalking={isReading}
                 timerProgress={timerProgress}
                 title={title}
+                subtitle={subtitle}
             />
         </AbsoluteFill>
     );
@@ -53,7 +55,8 @@ const AnswerPhase: React.FC<{
     isLast: boolean;
     endCardDuration: number;
     title: string;
-}> = ({ scene, subject, index, total, isLast, endCardDuration, title }) => {
+    subtitle?: string;
+}> = ({ scene, subject, index, total, isLast, endCardDuration, title, subtitle }) => {
     const frame = useCurrentFrame();
     const answerDurationWithBuffer = scene.answerDuration + 45; // 45 is ANSWER_BUFFER
 
@@ -75,6 +78,7 @@ const AnswerPhase: React.FC<{
                 isTalking={isReading}
                 timerProgress={0} // Gauge empty
                 title={title}
+                subtitle={subtitle}
             />
 
             {/* End Card Overlay & Audio */}
@@ -129,10 +133,12 @@ export const IchimonIttoShortsVideo: React.FC<{
     scenes?: IchimonIttoScene[];
     subject?: SubjectTheme;
     title?: string;
+    subtitle?: string;
 }> = ({
     scenes = ichimonIttoData,
     subject = 'history',
     title = '中2　歴史',
+    subtitle,
 }) => {
         const COUNTDOWN_DURATION = 45; // Unified pause after question
         const ANSWER_BUFFER = 45; // Unified pause after answer
@@ -159,6 +165,7 @@ export const IchimonIttoShortsVideo: React.FC<{
                                         total={scenes.length}
                                         countdownDuration={COUNTDOWN_DURATION}
                                         title={title}
+                                        subtitle={subtitle}
                                     />
                                 </Series.Sequence>
 
@@ -172,6 +179,7 @@ export const IchimonIttoShortsVideo: React.FC<{
                                         isLast={false} // エンドカード無効化
                                         endCardDuration={END_CARD_DURATION}
                                         title={title}
+                                        subtitle={subtitle}
                                     />
                                 </Series.Sequence>
                             </React.Fragment>
