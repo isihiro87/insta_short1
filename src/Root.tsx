@@ -20,11 +20,13 @@ const industryRevTotalFrames = industryRevScenario.scenes.reduce((acc, scene) =>
 const trivia3TotalFrames = trivia3Scenario.scenes.reduce((acc, scene) => acc + scene.durationInFrames, 0);
 
 // 一問一答の総フレーム数を計算（最後のシーンはバッファなし）
-const calculateIchimonIttoFrames = (scenes: IchimonIttoScene[]) => {
+const calculateIchimonIttoFrames = (scenes: IchimonIttoScene[], subject?: string) => {
+  // 英単語は問題読み上げが短いため、間を長めに（+18フレーム=0.6秒）
+  const countdownDuration = subject === 'english' ? 63 : 45;
   return scenes.reduce((acc, scene, index) => {
     const isLast = index === scenes.length - 1;
     const answerBuffer = isLast ? 0 : 45; // 最後のシーンはバッファなし
-    return acc + scene.questionDuration + 45 + scene.answerDuration + answerBuffer;
+    return acc + scene.questionDuration + countdownDuration + scene.answerDuration + answerBuffer;
   }, 0);
 };
 
@@ -148,7 +150,8 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={({ props }) => {
           // propsで渡されたscenesがあればそれを使用、なければデフォルト
           const scenes = props.scenes || ichimonIttoData;
-          const duration = calculateIchimonIttoFrames(scenes);
+          const subject = props.subject || 'history';
+          const duration = calculateIchimonIttoFrames(scenes, subject);
           return { durationInFrames: duration };
         }}
       />

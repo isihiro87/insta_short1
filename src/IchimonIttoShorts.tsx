@@ -140,7 +140,8 @@ export const IchimonIttoShortsVideo: React.FC<{
     title = '中2　歴史',
     subtitle,
 }) => {
-        const COUNTDOWN_DURATION = 45; // Unified pause after question
+        // 英単語は問題読み上げが短いため、間を長めに（+18フレーム=0.6秒）
+        const COUNTDOWN_DURATION = subject === 'english' ? 63 : 45;
         const ANSWER_BUFFER = 45; // Unified pause after answer
         const END_CARD_DURATION = 0; // エンドカード無効化
 

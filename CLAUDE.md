@@ -41,6 +41,16 @@ npm run upgrade
 | `/q-prepare [quizフォルダ]` | qa.md生成、音声ファイルリスト作成 |
 | `/q-render [quizフォルダ]` | 動画レンダリング、紹介文生成 |
 
+### English単語用（e-）
+
+| コマンド | 説明 |
+|---------|------|
+| `/e-make-word-quiz [wordsフォルダ]` | 英単語クイズ動画作成ワークフロー（全体ガイド） |
+| `/e-split-words [wordsフォルダ]` | words.mdを複数のwords_XX.mdファイルに分割 |
+| `/e-add-notes [wordsフォルダ]` | 英単語に補足（語源・覚え方・関連語等）を追加 |
+| `/e-prepare [wordsフォルダ]` | 英単語qa.md生成と音声ファイルリスト作成 |
+| `/e-render [wordsフォルダ]` | 英単語IchimonIttoData.tsx生成、動画レンダリング、紹介文生成 |
+
 ### Story用（s-）
 
 | コマンド | 説明 |
@@ -48,6 +58,12 @@ npm run upgrade
 | `/s-research-theme [テーマ]` | テーマを中学生向けにリサーチ（脚本作成の事前準備） |
 | `/s-review-story [storyフォルダ]` | 脚本を添削し改善案を出す |
 | `/s-make-prompts [storyフォルダ]` | 脚本から画像生成用プロンプトを作成 |
+
+### Audio用（a-）
+
+| コマンド | 説明 |
+|---------|------|
+| `/a-edit [操作]` | 音声ファイルの編集（カット/結合/分割） |
 
 ### 共通
 
@@ -61,6 +77,11 @@ npm run upgrade
 /q-prepare datas/history/grade2/4-1/3nanban_trade/quiz
 # → 音声ファイルを配置
 /q-render datas/history/grade2/4-1/3nanban_trade/quiz
+
+# 英単語クイズ動画作成
+/e-prepare datas/english/grade2/unit_06/quiz/words
+# → 音声ファイルを配置
+/e-render datas/english/grade2/unit_06/quiz/words
 
 # ストーリー作成
 /s-research-theme 桶狭間の戦い

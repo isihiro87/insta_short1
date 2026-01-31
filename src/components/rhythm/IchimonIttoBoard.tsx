@@ -107,6 +107,17 @@ export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
                             {subtitle || '定期テスト対策'}
                         </div>
                     </div>
+                    {/* 英語の場合: タイトル下に問題番号表示 */}
+                    {subject === 'english' && (
+                        <div style={{
+                            fontSize: '60px',
+                            fontWeight: 'bold',
+                            color: theme.accent,
+                            marginTop: '20px',
+                        }}>
+                            {currentQuestionIndex}/{totalQuestions}
+                        </div>
+                    )}
                 </div>
 
                 {/* 1. Question Section */}
@@ -127,7 +138,7 @@ export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
                         lineHeight: '1.3',
                         whiteSpace: 'pre-wrap',
                     }}>
-                        {`Q${currentQuestionIndex}. ${question}`}
+                        {subject === 'english' ? question : `Q${currentQuestionIndex}. ${question}`}
                     </div>
                 </div>
 
@@ -170,10 +181,11 @@ export const IchimonIttoBoard: React.FC<IchimonIttoBoardProps> = ({
                 }}>
                     <div style={{ fontSize: '40px', marginBottom: '5px', fontWeight: 'bold' }}>答え</div>
                     <div style={{
-                        fontSize: '85px',
+                        fontSize: answer.includes('\n') ? '68px' : '85px',
                         fontWeight: 'bold',
                         textAlign: 'center',
                         lineHeight: '1.2',
+                        whiteSpace: 'pre-wrap',
                     }}>
                         {phase === 'answer' ? answer : '？？？'}
                     </div>

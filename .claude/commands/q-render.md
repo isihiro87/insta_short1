@@ -1,10 +1,10 @@
 ---
-description: IchimonIttoData.tsx生成、動画レンダリング、紹介文生成
+description: IchimonIttoData.tsx生成、レンダリング用シェルスクリプト作成、紹介文生成
 ---
 
 # クイズ動画レンダリング
 
-音声ファイルから IchimonIttoData.tsx を生成し、動画をレンダリングして紹介文を作成します。
+音声ファイルから IchimonIttoData.tsx を生成し、レンダリング用シェルスクリプトを作成して紹介文を作成します。
 
 ## 引数
 
@@ -99,6 +99,9 @@ done
 // フォルダ: [フォルダパス]
 // 生成日: [日付]
 
+// タイトル情報（学年・教科）
+export const titleData = '中2　歴史';
+
 export interface IchimonIttoScene {
     id: string;
     question: string;
@@ -166,106 +169,87 @@ export const ichimonIttoData: IchimonIttoScene[] = [
 ...
 
 修正が必要な場合は編集後、「OK」と入力してください。
-並行レンダリングを開始します。
+レンダリング用スクリプトを作成します。
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**重要**: ユーザーが「OK」と応答するまでレンダリングに進まない。
+**重要**: ユーザーが「OK」と応答するまでレンダリングスクリプト作成に進まない。
 
 ---
 
-## ステップ3: 並行レンダリング
+## ステップ3: レンダリング用シェルスクリプトの作成
 
-### 3.1 レンダリング方式
+### 3.1 スクリプト作成方針
 
-**`--public-dir` と `--props` を使用して並行実行可能にする**
+**レンダリングはClaudeが実行しない。シェルスクリプトを作成し、ユーザーが手動で実行する。**
 
-各レンダリングは独立した一時ディレクトリを使用するため、競合せずに並行実行できる。
+### 3.2 シェルスクリプトのテンプレート
 
-### 3.2 各ファイルのレンダリング手順
+各qas.mdファイルに対してスクリプトを作成:
 
 ```bash
-# 1. 一時publicディレクトリを作成
+#!/bin/bash
+set -e
+
+# レンダリングスクリプト: [ID]-qas.md
+# 生成日: [日付]
+
 TEMP_DIR=$(mktemp -d)
 mkdir -p "$TEMP_DIR/audio/explain"
 
-# 2. 必要なファイルをコピー
-cp [フォルダパス]/audios/*.wav "$TEMP_DIR/audio/explain/"
+# 音声ファイルをコピー（必要なファイルのみ）
+cp [フォルダパス]/audios/[開始番号]-[トピックID].wav "$TEMP_DIR/audio/explain/"
+cp [フォルダパス]/audios/[開始番号+1]-[トピックID].wav "$TEMP_DIR/audio/explain/"
+# ... 必要な音声ファイルをすべて列挙
+
 cp public/audio/bgm.mp3 "$TEMP_DIR/audio/"
-cp public/audio/explain/finish.wav "$TEMP_DIR/audio/explain/"
 
-# 3. propsをJSONファイルとして準備（IchimonIttoData.tsxから変換）
-# props.json の形式:
-# {
-#   "scenes": [...],  // ichimonIttoData配列
-#   "subject": "history",
-#   "title": "中2　歴史"
-# }
+# データファイルをsrcにコピー
+cp [フォルダパス]/[ID]-IchimonIttoData.tsx src/IchimonIttoData.tsx
 
-# 4. レンダリング実行
-npx remotion render src/index.ts IchimonIttoShorts \
+echo "=== [ID] レンダリング開始 ==="
+PUPPETEER_HEADLESS_MODE=new npx remotion render src/index.ts IchimonIttoShorts \
   [フォルダパス]/[ID]-output.mp4 \
   --public-dir "$TEMP_DIR" \
-  --props "$(cat [TEMP_PROPS_FILE])"
+  --browser-executable /workspaces/insta-short1/chrome-headless-shell/linux-143.0.7499.192/chrome-headless-shell-linux64/chrome-headless-shell \
+  --props '{"subject":"history"}' \
+  --disable-chrome-sandbox
 
-# 5. クリーンアップ
+echo "=== [ID] 完了 ==="
 rm -rf "$TEMP_DIR"
-rm -f [TEMP_PROPS_FILE]
 ```
 
-### 3.3 並行実行パターン
+保存先: `scripts/render-[識別名].sh`
 
-複数のファイルがある場合、以下のように並行実行:
+**識別名の例**: `grade2-nanban-qas`, `grade3-meiji-qas2`
+
+### 3.3 スクリプトに実行権限を付与
 
 ```bash
-# バックグラウンドで複数のレンダリングを開始
-# 各レンダリングは独自のTEMP_DIRを持つため競合しない
-
-# ファイル1のレンダリング（バックグラウンド）
-(render_file1) &
-PID1=$!
-
-# ファイル2のレンダリング（バックグラウンド）
-(render_file2) &
-PID2=$!
-
-# 全て完了を待機
-wait $PID1 $PID2
+chmod +x scripts/render-[識別名].sh
 ```
 
-### 3.4 props.json の生成方法
+### 3.4 ユーザーへの実行指示
 
-IchimonIttoData.tsxからprops.jsonを生成:
-
-```typescript
-// IchimonIttoData.tsx の ichimonIttoData 配列を抽出し、
-// 以下の形式のJSONに変換:
-{
-  "scenes": [
-    {
-      "id": "q1",
-      "question": "問題文",
-      "answer": "答え",
-      "description": "補足",
-      "questionAudio": "audio/explain/00-topic.wav",
-      "questionDuration": 60,
-      "answerAudio": "audio/explain/01-topic.wav",
-      "answerDuration": 45
-    }
-    // ...
-  ],
-  "subject": "history",
-  "title": "中2　歴史"
-}
 ```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## レンダリング用スクリプトを作成しました
 
-**注意**: 音声パスは `audio/explain/...` のまま（一時ディレクトリ内の相対パス）
+以下のコマンドで実行してください:
+
+./scripts/render-[識別名].sh
+
+複数ファイルがある場合は順番に実行してください:
+1. ./scripts/render-[識別名1].sh
+2. ./scripts/render-[識別名2].sh
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
 
 ---
 
 ## ステップ4: 紹介文の生成
 
-レンダリング完了後、各ファイルに対して紹介文を生成。
+レンダリング完了後（ユーザーがスクリプト実行完了を報告後）、各ファイルに対して紹介文を生成。
 
 **post_youtube.txt**:
 ```
@@ -316,26 +300,27 @@ IchimonIttoData.tsxからprops.jsonを生成:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ## 完了
 
-### 処理したファイル: [N]件（並行レンダリング）
+### 処理したファイル: [N]件
 
 【[ID1]】
 - [ID1]-IchimonIttoData.tsx
-- [ID1]-output.mp4
+- scripts/render-[識別名1].sh
 - [ID1]-post_youtube.txt
 - [ID1]-post_instagram.txt
 
 【[ID2]】
 - [ID2]-IchimonIttoData.tsx
-- [ID2]-output.mp4
+- scripts/render-[識別名2].sh
 - [ID2]-post_youtube.txt
 - [ID2]-post_instagram.txt
 
 ...
 
 ### 次のステップ
-1. 各output.mp4を確認
-2. 紹介文を確認・編集
-3. アップロード
+1. スクリプトを実行してレンダリング
+2. output.mp4を確認
+3. 紹介文を確認・編集
+4. アップロード
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -351,29 +336,25 @@ IchimonIttoData.tsxからprops.jsonを生成:
 │   ├── 00-[トピック].wav
 │   └── ...
 ├── [ID]-IchimonIttoData.tsx  # データファイル
-├── [ID]-output.mp4           # 出力動画
+├── [ID]-output.mp4           # 出力動画（スクリプト実行後）
 ├── [ID]-post_youtube.txt     # YouTube紹介文
 └── [ID]-post_instagram.txt   # Instagram紹介文
+
+scripts/
+└── render-[識別名].sh        # レンダリング用スクリプト
 ```
 
 ---
 
 ## 重要なルール
 
-1. **データ生成は全ファイル先に完了** - ユーザー確認後に一括レンダリング
-2. **並行レンダリング可能** - `--public-dir`で一時ディレクトリを分離
-3. **IDをファイル名のプレフィックスに使用** - 例: `03-qas.md` → `03-`
-4. **改行は11文字以内** - 12文字以上での改行は禁止
-5. **紹介文のフォーマットは統一** - テンプレート通りに作成
-
----
-
-## 並行処理のまとめ
-
-| フェーズ | 並行可否 | 理由 |
-|---------|---------|------|
-| ファイル確認 | ○ | 読み取りのみ |
-| データ生成 | ○ | 独立したファイルへの書き込み |
-| ユーザー確認 | - | 一括で確認を求める |
-| レンダリング | ○ | `--public-dir`で分離 |
-| 紹介文生成 | ○ | 独立したファイルへの書き込み |
+1. **レンダリングはClaudeが実行しない** - シェルスクリプトを作成し、ユーザーが手動実行
+2. **--timeout オプションは使用しない** - タイムアウトなしで実行
+3. **--disable-chrome-sandbox を必ず指定** - サンドボックスエラー防止
+4. **--props で subject を指定** - Root.tsx を変更せずにテーマを切り替え
+5. **音声ファイルは個別にcp** - ブレース展開を使わない（コピペ時の改行問題回避）
+6. **PUPPETEER_HEADLESS_MODE=new を必ず設定** - ブラウザ接続タイムアウト防止
+7. **chrome-headless-shell を使用** - `--browser-executable` オプションで指定
+8. **IDをファイル名のプレフィックスに使用** - 例: `03-qas.md` → `03-`
+9. **改行は11文字以内** - 12文字以上での改行は禁止
+10. **紹介文のフォーマットは統一** - テンプレート通りに作成
